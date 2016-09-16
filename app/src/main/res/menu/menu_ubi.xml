@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:KeepSafe="http://schemas.android.com/apk/res-auto">
+    <!--Añadir un elemento item para cada opcion del menu-->
+    <item
+        android:id="@+id/action_mensaje"
+        android:title="@string/action_mensaje"
+       />
+    <item
+        android:id="@+id/action_logout"
+        android:title="@string/action_logout"
+         />
+
+
+
+
+</menu>

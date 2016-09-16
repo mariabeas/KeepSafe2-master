@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- Toolbar -->
+    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/menu_datos"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:foregroundGravity="right"
+        android:id="@+id/logo"
+        android:src="@drawable/logo"
+        android:layout_gravity="right"
+        android:layout_below="@+id/menu_datos"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnDatos"
+        android:id="@+id/btnDatos"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/logo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="20dp"
+        android:layout_margin="20dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnAgenda"
+        android:id="@+id/btnAgenda"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/btnDatos"
+        android:layout_alignLeft="@+id/btnDatos"
+        android:layout_alignStart="@+id/btnDatos"
+        android:layout_alignRight="@+id/btnDatos"
+        android:layout_alignEnd="@+id/btnDatos" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnSMS"
+        android:id="@+id/btnSMS"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/btnAgenda"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp"
+        android:layout_margin="20dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnInfo"
+        android:id="@+id/btnInfo"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/btnUbi"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_alignLeft="@+id/btnUbi"
+        android:layout_alignStart="@+id/btnUbi" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnUbi"
+        android:text="@string/btnUbicacion"
+        android:layout_below="@+id/btnSMS"
+        android:layout_alignRight="@+id/btnSMS"
+        android:layout_alignEnd="@+id/btnSMS"
+        android:layout_alignLeft="@+id/btnSMS"
+        android:layout_alignStart="@+id/btnSMS" />
+
+</RelativeLayout>

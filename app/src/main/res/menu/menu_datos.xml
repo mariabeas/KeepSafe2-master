@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:KeepSafe="http://schemas.android.com/apk/res-auto">
+    <!--Añadir un elemento item para cada opcion del menu-->
+    <item
+        android:id="@+id/action_pass"
+        android:title="@string/action_pass"
+        android:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_save"
+        android:title="@string/action_save"
+        android:showAsAction="never" />
+    <item
+        android:id="@+id/action_logout"
+        android:title="@string/action_logout"
+        android:showAsAction="never" />
+
+
+
+</menu>

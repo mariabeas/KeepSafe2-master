@@ -1,0 +1,108 @@
+<resources>
+    <string name="app_name">Keep Safe</string>
+
+    <!-- Strings de la pantalla principal -->
+    <string name="btnInicio">Iniciar sesión</string>
+    <string name="edtUser">Email</string>
+    <string name="edtPassword">Contraseña</string>
+    <string name="box">Recordar datos</string>
+    <string name="btnRegistro">Registrarse</string>
+    <string name="btnRecuperar">Recuperar contraseña</string>
+
+    <!-- Strings del menú -->
+    <string name="btnDatos">Datos personales</string>
+    <string name="btnAgenda">Agenda emergencias</string>
+    <string name="btnSMS">Enviar mensaje</string>
+    <string name="btnUbicacion">Ubicación</string>
+    <string name="btnInfo">Información</string>
+    <string name="btnCerrar">Cerrar sesión</string>
+    <string name="btnUbi">Ubi</string>
+    <string name="btnUbi2">Ubicacion sin api</string>
+
+    <!-- Strings de la pantalla info -->
+    <string name="txtInfo">App de ayuda para gente con discapacidad auditiva</string>
+
+    <!-- Strings de la pantalla registro -->
+    <string name="btnAceptar">Aceptar</string>
+    <string name="edtConfiPass">Contraseña</string>
+    <string name="edtConfirPass">Confirmar Contraseña</string>
+
+    <!-- Strings de la pantalla datos -->
+    <string name="edtNombre">Nombre</string>
+    <string name="edtApellido">Apellido</string>
+    <string name="edtFecha">Fecha de nacimiento</string>
+    <string name="edtSexo">Sexo</string>
+    <string name="edtSangre">Grupo sanguíneo</string>
+    <string name="edtNum">Num.Seguridad social</string>
+    <string name="btnCambiar">Cambiar contraseña</string>
+    <string name="btnFoto">Cambiar foto</string>
+    <string name="btnGuardar">Guardar datos</string>
+
+    <!-- Strings de la pantalla cambiar contraseña -->
+    <string name="edtPassActual">Contraseña actual</string>
+    <string name="edtNuevaPass">Nueva contraseña</string>
+    <string name="edtConfirmarPass">Confirmar contraseña</string>
+
+    <!-- Strings de la pantalla recuperar contraseña-->
+    <string name="edtRecuperar">Introduzca el email</string>
+    <string name="btnEnviarEmail">Enviar</string>
+
+    <!-- Strings de la pantalla información -->
+    <string name="btnFB">Compartir en Facebook</string>
+
+    <!--Facebook id -->
+    <string name="facebook_app_id">1654873761420623</string>
+    <string name="title_activity_maps">Map</string>
+
+    <!-- Strings de la pantalla agenda -->
+    <string name="edtNombreAgenda">Nombre</string>
+    <string name="edtTlf">Teléfono</string>
+    <string name="btnAdd">Añadir</string>
+
+    <!-- Strings de la pantalla linea de la agenda -->
+    <string name="txtNombre">Nombre</string>
+    <string name="txtTlf">Teléfono</string>
+
+    <!-- Strings de la pantalla de los SMS-->
+    <string name="edtContacto">Introduzca el teléfono </string>
+    <string name="edtSMS">Introduzca el mensaje que desee enviar</string>
+    <string name="btnEnviarSMS">Enviar</string>
+    <string name="edtUbicacion">Mi ubicación es</string>
+
+    <!-- Strings de la pantalla datos guardados-->
+    <string name="btnVolverMenu">Volver al menú</string>
+    <string name="btnEditarDatos">Editar datos</string>
+    <string name="tvEmail">Email: </string>
+    <string name="tvNombre">Nombre: </string>
+    <string name="tvApellido">Apellidos: </string>
+    <string name="tvFecha">Fecha nacimiento: </string>
+    <string name="tvSexo">Sexo: </string>
+    <string name="tvSangre">Grupo sanguíneo: </string>
+    <string name="tvNum">Núm.Seguridad social: </string>
+
+    <!--Strings de la pantalla ubicacion -->
+    <string name="tvUbicacion">Ubicación actual</string>
+    <string name="tvDireccion">Dirección actual</string>
+    <string name="btnActualizar">Actualizar dirección</string>
+
+
+    <!-- Strings de Action Bar del Menu datos -->
+    <string name="action_logout">Cerrar sesión</string>
+    <string name="action_foto">Cambiar foto</string>
+    <string name="action_save">Guardar datos</string>
+    <string name="action_pass">Cambiar contraseña</string>
+
+    <!-- Strings ded Action Bar del Menu datos guardados -->
+    <string name="action_editar">Editar datos</string>
+
+    <!-- Strings ded Action Bar del Menu agenda -->
+    <string name="action_ubicacion">Obtener ubicación</string>
+
+    <!-- Strings de Action Bar del Menu ubicacion -->
+
+    <string name="action_mensaje">Enviar SMS</string>
+
+
+
+
+</resources>

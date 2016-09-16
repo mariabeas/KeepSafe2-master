@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- Toolbar -->
+    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/menu_datos"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:foregroundGravity="right"
+        android:id="@+id/logo"
+        android:src="@drawable/logo"
+        android:layout_gravity="right"
+        android:layout_below="@+id/menu_datos"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="false" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btnEnviarSMS"
+        android:id="@+id/btnEnviarSMS"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/tvDireccion"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="37dp" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/tvUbicacion"
+        android:id="@+id/tvUbi"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="29dp"
+        android:layout_below="@+id/logo"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:textAppearance="?android:attr/textAppearanceLarge"
+android:text="@string/tvDireccion"
+android:id="@+id/tvDireccion"
+android:layout_gravity="center_horizontal"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/tvUbi"
+        android:layout_alignEnd="@+id/tvUbi"
+        android:layout_marginTop="40dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtSMS"
+        android:hint="@string/edtSMS"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.21"
+        android:layout_above="@+id/tvUbi"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:hint="@string/edtContacto"
+        android:ems="10"
+        android:id="@+id/edtContacto"
+        android:layout_gravity="center_horizontal"
+        android:layout_above="@+id/edtSMS"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/logo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="122dp">
+
+        <!-- <android.support.design.widget.FloatingActionButton
+                     android:id="@+id/btnMensaje"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_gravity="right"
+                     android:src="@android:drawable/sym_action_chat"
+                     app:elevation="6dp"
+                     app:pressedTranslationZ="12dp"
+                     android:layout_below="@+id/logo"
+                     android:layout_toLeftOf="@+id/logo"
+                     android:layout_toStartOf="@+id/logo"
+                     app:backgroundTint="@color/colorAccent" />-->
+
+    </LinearLayout>
+
+
+</RelativeLayout>

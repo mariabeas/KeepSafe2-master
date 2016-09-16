@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.app.mariabeas.keepsafe"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="15"
+        android:targetSdkVersion="23" />
+
+    <!-- Permisos para google play services -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Encontrar ubicacion -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+
+    <!-- Para escribir en la cache en la memoria externa del movil -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+
+    <!-- Para poder mandar sms -->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
+    <!-- Optional permission for App measurement to run. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" /> <!-- Permissions required for GCM -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/icono"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme" >
+
+        <!-- Meta datos para usar la api de FB y la de Google -->
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <!--
+            <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyBPUFWVb-oISEs0NXd3WRXbVI5AkaY59wY" />
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBPUFWVb-oISEs0NXd3WRXbVI5AkaY59wY" />
+
+        <!--
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".MapsActivity"
+            android:label="@string/title_activity_maps"></activity>
+        -->
+
+
+        <!-- Pantalla principal -->
+        <activity android:name="com.app.mariabeas.keepsafe.MainActivity" >
+
+            <!--
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+            -->
+        </activity>
+
+        <!-- Pantalla del menu -->
+        <activity
+            android:name="com.app.mariabeas.keepsafe.MenuActivity"
+            android:label="@string/app_name" />
+
+        <!-- Pantalla del registro -->
+        <activity
+            android:name="com.app.mariabeas.keepsafe.RegistroActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="com.app.mariabeas.keepsafe.MenuActivity" />
+
+        <!-- Pantalla de los datos -->
+        <activity
+            android:name="com.app.mariabeas.keepsafe.DatosActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="com.app.mariabeas.keepsafe.DatosGuardadosActivity" />
+
+        <!-- Pantalla del splash -->
+        <activity android:name="com.app.mariabeas.keepsafe.SplashActivity" >
+
+            <!-- android:label="@string/app_name"> -->
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Pantalla de cambiar contraseña -->
+        <activity
+            android:name="com.app.mariabeas.keepsafe.CambiarPassActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="com.app.mariabeas.keepsafe.MenuActivity" />
+
+        <!-- Pantalla de ubicación -->
+        <activity
+            android:name="com.app.mariabeas.keepsafe.UbicacionActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="com.app.mariabeas.keepsafe.MenuActivity" />
+        <activity
+            android:name="com.app.mariabeas.keepsafe.UbiActivity"
+            android:label="Keep Safe"
+            android:parentActivityName="com.app.mariabeas.keepsafe.MenuActivity" />
+
+        <!-- Pantalla de información -->
+        <activity
+            android:name="com.app.mariabeas.keepsafe.InformacionActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="com.app.mariabeas.keepsafe.MenuActivity" />
+
+        <!-- Pantalla de la agenda -->
+        <activity
+            android:name="com.app.mariabeas.keepsafe.AgendaActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="com.app.mariabeas.keepsafe.MenuActivity" />
+
+        <!-- Pantalla de los SMS -->
+        <activity
+            android:name="com.app.mariabeas.keepsafe.EnviarSMSActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="com.app.mariabeas.keepsafe.MenuActivity" />
+
+        <!-- Pantalla de los datos guardados -->
+        <activity
+            android:name="com.app.mariabeas.keepsafe.DatosGuardadosActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="com.app.mariabeas.keepsafe.MenuActivity" />
+
+        <!-- Pantalla de la lista de los datos de prueba -->
+        <activity android:name="com.app.mariabeas.keepsafe.ListaDatosActivity" />
+
+        <!-- Facebook activity para poder usar el login o lo de compartir de facebook -->
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider1654873761420623"
+            android:exported="true" />
+        <provider
+            android:name="com.google.android.gms.measurement.AppMeasurementContentProvider"
+            android:authorities="com.app.mariabeas.keepsafe.google_measurement_service"
+            android:exported="false" />
+
+        <receiver
+            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="com.google.android.gms.measurement.UPLOAD" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.google.android.gms.measurement.AppMeasurementService"
+            android:enabled="true"
+            android:exported="false" /> <!-- Include the AdActivity and InAppPurchaseActivity configChanges and themes. -->
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent" />
+        <activity
+            android:name="com.google.android.gms.ads.purchase.InAppPurchaseActivity"
+            android:theme="@style/Theme.IAPTheme" />
+        <activity
+            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+    </application>
+
+</manifest>

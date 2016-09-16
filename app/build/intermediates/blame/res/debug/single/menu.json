@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "/Users/MariaBeas/Downloads/KeepSafe2-master/app/build/intermediates/res/merged/debug/menu/menu_ubi.xml",
+        "source": "/Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/res/menu/menu_ubi.xml"
+    },
+    {
+        "merged": "/Users/MariaBeas/Downloads/KeepSafe2-master/app/build/intermediates/res/merged/debug/menu/menu_datos_guardados.xml",
+        "source": "/Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/res/menu/menu_datos_guardados.xml"
+    },
+    {
+        "merged": "/Users/MariaBeas/Downloads/KeepSafe2-master/app/build/intermediates/res/merged/debug/menu/menu_datos.xml",
+        "source": "/Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/res/menu/menu_datos.xml"
+    },
+    {
+        "merged": "/Users/MariaBeas/Downloads/KeepSafe2-master/app/build/intermediates/res/merged/debug/menu/menu_agenda.xml",
+        "source": "/Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/res/menu/menu_agenda.xml"
+    },
+    {
+        "merged": "/Users/MariaBeas/Downloads/KeepSafe2-master/app/build/intermediates/res/merged/debug/menu/menu_menu.xml",
+        "source": "/Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/res/menu/menu_menu.xml"
+    }
+]
