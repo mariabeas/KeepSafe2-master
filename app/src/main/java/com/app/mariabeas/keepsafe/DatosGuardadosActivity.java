@@ -82,6 +82,7 @@ public class DatosGuardadosActivity extends AppCompatActivity {
         String[] emls = new String[MDB.recuperarUsuario().size()];
 
 
+
         for (int i = 0; i < MDB.recuperarUsuario().size(); i++) {
 
             ids[i] = Integer.parseInt(MDB.recuperarUsuario().get(i).getIdUsuario());
@@ -100,23 +101,26 @@ public class DatosGuardadosActivity extends AppCompatActivity {
 
         }
 
-        //RECUPERAMOS EL REGISTRO CON EL ID 1
+        //RECUPERAMOS EL REGISTRO CON EL ID
 
-        String nom = MDB.recuperarUsuario(1).getNombreUsuario();
-        String apellido = MDB.recuperarUsuario(1).getApellidosUsuario();
-        String password = MDB.recuperarUsuario(1).getPasswordUsuario();
-        String fecha = MDB.recuperarUsuario(1).getFechaNac();
-        String sexo = MDB.recuperarUsuario(1).getSexo();
-        String sangre = MDB.recuperarUsuario(1).getGrupoSanguineo();
-        String numero = MDB.recuperarUsuario(1).getNumSeguridadSocial();
-        String eml = MDB.recuperarUsuario(1).getEmailUsuario();
-        tvEmail.setText(eml.toString());
-        tvNombre.setText(nom.toString());
-        tvApellido.setText(apellido.toString());
-        tvFecha.setText(fecha.toString());
-        tvSexo.setText(sexo.toString());
-        tvSangre.setText(sangre.toString());
-        tvNum.setText(numero.toString());
+        for(int i=0;i<MDB.recuperarUsuario().size();i++) {
+            int id=Integer.parseInt(MDB.recuperarUsuario().get(i).getIdUsuario());
+            String nom = MDB.recuperarUsuario(id).getNombreUsuario();
+            String apellido = MDB.recuperarUsuario(id).getApellidosUsuario();
+            String password = MDB.recuperarUsuario(id).getPasswordUsuario();
+            String fecha = MDB.recuperarUsuario(id).getFechaNac();
+            String sexo = MDB.recuperarUsuario(id).getSexo();
+            String sangre = MDB.recuperarUsuario(id).getGrupoSanguineo();
+            String numero = MDB.recuperarUsuario(id).getNumSeguridadSocial();
+            String eml = MDB.recuperarUsuario(id).getEmailUsuario();
+            tvEmail.setText(eml.toString());
+            tvNombre.setText(nom.toString());
+            tvApellido.setText(apellido.toString());
+            tvFecha.setText(fecha.toString());
+            tvSexo.setText(sexo.toString());
+            tvSangre.setText(sangre.toString());
+            tvNum.setText(numero.toString());
+        }
 
 
     }
