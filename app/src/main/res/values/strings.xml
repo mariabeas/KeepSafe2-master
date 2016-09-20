@@ -102,6 +102,10 @@
 
     <string name="action_mensaje">Enviar SMS</string>
 
+    <!-- Strings de la pantalla agenda botones-->
+    <string name="btnBomberos">Bomberos</string>
+    <string name="tvBomberos">Bomberos</string>
+
 
 
 

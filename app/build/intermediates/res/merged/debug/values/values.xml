@@ -401,6 +401,7 @@
     <string name="btnActualizar">Actualizar dirección</string>
     <string name="btnAdd">Añadir</string>
     <string name="btnAgenda">Agenda emergencias</string>
+    <string name="btnBomberos">Bomberos</string>
     <string name="btnCambiar">Cambiar contraseña</string>
     <string name="btnCerrar">Cerrar sesión</string>
     <string name="btnDatos">Datos personales</string>
@@ -516,6 +517,7 @@
     <string name="store_picture_title">Save image</string>
     <string name="title_activity_maps">Map</string>
     <string name="tvApellido">Apellidos: </string>
+    <string name="tvBomberos">Bomberos</string>
     <string name="tvDireccion">Dirección actual</string>
     <string name="tvEmail">Email: </string>
     <string name="tvFecha">Fecha nacimiento: </string>

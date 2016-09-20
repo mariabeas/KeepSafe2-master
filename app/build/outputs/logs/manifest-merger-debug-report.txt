@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:2:1-159:12
+ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:2:1-161:12
 	xmlns:android
 		ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:2:11-69
 	package
@@ -68,7 +68,7 @@ ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManif
 	android:name
 		ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:22:22-64
 application
-ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:26:5-157:19
+ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:26:5-159:19
 MERGED from [com.google.android.gms:play-services-measurement:8.3.0] /Users/MariaBeas/Downloads/KeepSafe2-master/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/AndroidManifest.xml:26:5-46:19
 MERGED from [com.google.android.gms:play-services-basement:8.3.0] /Users/MariaBeas/Downloads/KeepSafe2-master/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.3.0/AndroidManifest.xml:20:5-24:19
 MERGED from [com.android.support:support-v4:23.4.0] /Users/MariaBeas/Downloads/KeepSafe2-master/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
@@ -338,24 +338,28 @@ activity#com.app.mariabeas.keepsafe.ListaDatosActivity
 ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:138:9-55
 	android:name
 		ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:138:19-53
+activity#com.app.mariabeas.keepsafe.AgendaBotonesActivity
+ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:141:5-54
+	android:name
+		ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:141:15-52
 activity#com.facebook.FacebookActivity
-ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:145:9-149:75
+ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:147:9-151:75
 	android:label
-		ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:148:13-45
+		ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:150:13-45
 	android:configChanges
-		ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:147:13-96
+		ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:149:13-96
 	android:theme
-		ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:149:13-72
+		ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:151:13-72
 	android:name
-		ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:146:13-57
+		ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:148:13-57
 provider#com.facebook.FacebookContentProvider
-ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:151:9-154:39
+ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:153:9-156:39
 	android:exported
-		ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:154:13-36
+		ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:156:13-36
 	android:authorities
-		ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:153:13-91
+		ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:155:13-91
 	android:name
-		ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:152:13-64
+		ADDED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml:154:13-64
 uses-sdk
 INJECTED from /Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [com.google.android.gms:play-services-measurement:8.3.0] /Users/MariaBeas/Downloads/KeepSafe2-master/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.3.0/AndroidManifest.xml:18:5-42

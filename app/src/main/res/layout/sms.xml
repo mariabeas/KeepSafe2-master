@@ -31,11 +31,7 @@
         android:layout_below="@+id/tvDireccion"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="37dp" />
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-    </ScrollView>
 
     <TextView
         android:layout_width="wrap_content"
@@ -49,12 +45,12 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:textAppearance="?android:attr/textAppearanceLarge"
-android:text="@string/tvDireccion"
-android:id="@+id/tvDireccion"
-android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/tvDireccion"
+        android:id="@+id/tvDireccion"
+        android:layout_gravity="center_horizontal"
         android:layout_centerVertical="true"
         android:layout_alignRight="@+id/tvUbi"
         android:layout_alignEnd="@+id/tvUbi"
@@ -80,29 +76,6 @@ android:layout_gravity="center_horizontal"
         android:layout_gravity="center_horizontal"
         android:layout_above="@+id/edtSMS"
         android:layout_centerHorizontal="true" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/logo"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="122dp">
-
-        <!-- <android.support.design.widget.FloatingActionButton
-                     android:id="@+id/btnMensaje"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_gravity="right"
-                     android:src="@android:drawable/sym_action_chat"
-                     app:elevation="6dp"
-                     app:pressedTranslationZ="12dp"
-                     android:layout_below="@+id/logo"
-                     android:layout_toLeftOf="@+id/logo"
-                     android:layout_toStartOf="@+id/logo"
-                     app:backgroundTint="@color/colorAccent" />-->
-
-    </LinearLayout>
 
 
 </RelativeLayout>

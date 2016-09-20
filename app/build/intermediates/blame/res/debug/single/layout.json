@@ -44,6 +44,10 @@
         "source": "/Users/MariaBeas/Downloads/KeepSafe2-master/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/layout/abc_action_menu_item_layout.xml"
     },
     {
+        "merged": "/Users/MariaBeas/Downloads/KeepSafe2-master/app/build/intermediates/res/merged/debug/layout/agenda_botones.xml",
+        "source": "/Users/MariaBeas/Downloads/KeepSafe2-master/app/src/main/res/layout/agenda_botones.xml"
+    },
+    {
         "merged": "/Users/MariaBeas/Downloads/KeepSafe2-master/app/build/intermediates/res/merged/debug/layout/abc_search_dropdown_item_icons_2line.xml",
         "source": "/Users/MariaBeas/Downloads/KeepSafe2-master/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/layout/abc_search_dropdown_item_icons_2line.xml"
     },

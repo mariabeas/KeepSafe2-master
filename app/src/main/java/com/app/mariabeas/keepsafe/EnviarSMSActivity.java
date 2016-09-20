@@ -2,17 +2,14 @@ package com.app.mariabeas.keepsafe;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,6 +21,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +39,7 @@ import static java.lang.String.valueOf;
 /**
  * Created by MariaBeas on 15/2/16.
  */
-public class EnviarSMSActivity extends UbiActivity{
+public class EnviarSMSActivity extends UbiActivity {
 
     ImageView logo;
     EditText edtContacto;
@@ -53,14 +60,13 @@ public class EnviarSMSActivity extends UbiActivity{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //ELEMENTOS DE LA INTERFAZ
         logo = (ImageView) findViewById(R.id.logo);
-        Button btnEnviarSMS = (Button) findViewById(R.id.btnEnviarSMS);
         edtContacto = (EditText) findViewById(R.id.edtContacto);
         edtSMS = (EditText) findViewById(R.id.edtSMS);
         //edtUbicacion = (EditText) findViewById(R.id.edtUbicacion);
         tvUbi = (TextView) findViewById(R.id.tvUbi);
         tvDireccion = (TextView) findViewById(R.id.tvDireccion);
-
-
+        //Insertamos los datos del SMS
+        Button btnEnviarSMS = (Button) findViewById(R.id.btnEnviarSMS);
 
         MiListener listener=new MiListener();
         btnEnviarSMS.setOnClickListener(listener);
@@ -90,7 +96,15 @@ public class EnviarSMSActivity extends UbiActivity{
                     direccion.getCountryName());
             tvDireccion.setText(direccionText);
         }
+        numerosTelefono();
 
+    }
+
+    public void numerosTelefono(){
+        String telefonoBombero=getIntent().getStringExtra("telefonoBombero");
+        edtContacto.setText(telefonoBombero);
+        String telefono112=getIntent().getStringExtra("telefono112");
+        edtContacto.setText(telefono112);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -142,7 +156,19 @@ public class EnviarSMSActivity extends UbiActivity{
 
         @Override
         public void onClick(View v) {
-            if(v.getId()==R.id.btnEnviarSMS){
+            //PROBAR CON EL WEB SERVICE
+            if (v.getId() == R.id.btnEnviarSMS) {
+              /* if (!edtContacto.getText().toString().trim().equalsIgnoreCase("") || !edtSMS.getText().toString().trim().equalsIgnoreCase("")
+                       || !tvUbi.getText().toString().trim().equalsIgnoreCase("") || !tvDireccion.getText().toString().trim().equalsIgnoreCase("")) {
+                    new Insertar(EnviarSMSActivity.this).execute();
+                } else
+                   Toast.makeText(EnviarSMSActivity.this, "Campos sin rellenar, reviselos", Toast.LENGTH_LONG).show();
+            */
+                new Insertar(EnviarSMSActivity.this).execute();
+            }
+
+            //ENVIAR SMS A TELEFONOS DIRECTAMENTE
+            /*if(v.getId()==R.id.btnEnviarSMS){
                 PendingIntent sentIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, new Intent("SMS_SENT"), 0);
 
                 registerReceiver(new BroadcastReceiver() {
@@ -186,10 +212,67 @@ public class EnviarSMSActivity extends UbiActivity{
             {
                 Toast.makeText(getApplicationContext(), "No se puede enviar, los datos son incorrectos", Toast.LENGTH_SHORT).show();
             }
-        }};
+        }};*/
 
-            }
+        }
+    }
 
+    //INSERTAR LOS DATOS DEL MENSAJE EN EL SERVIDOR
+    private boolean insertar(){
+        HttpClient httpClient=new DefaultHttpClient();
+        List<NameValuePair> nameValuePairs;
+        HttpPost httpPost=new HttpPost("http://192.168.1.36:8888/hmis2015/insert.php");
+        nameValuePairs=new ArrayList<>(4);
+        //añadimos nuestros datos
+        nameValuePairs.add(new BasicNameValuePair("telefono",edtContacto.getText().toString().trim()));
+        nameValuePairs.add(new BasicNameValuePair("mensaje",edtSMS.getText().toString().trim()));
+        nameValuePairs.add(new BasicNameValuePair("ubicacion",tvUbi.getText().toString().trim()));
+        nameValuePairs.add(new BasicNameValuePair("direccion",tvDireccion.getText().toString().trim()));
+         try{
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            httpClient.execute(httpPost);
+            return true;
+
+        }catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    class Insertar extends AsyncTask<String,String,String>{
+        private Activity context;
+        Insertar (Activity context){
+            this.context=context;
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            if(insertar())
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(context,"Mensaje enviado con éxito",Toast.LENGTH_LONG).show();
+                        //PARA LIMPIAR EL TEXTO DE LA PANTALLA NO ES NECESARIO
+                      // edtContacto.setText("");
+                       //edtSMS.setText("");
+                        //tvUbi.setText("");
+                        //tvDireccion.setText("");
+                    }
+                });
+             else
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(context,"Error al enviar el mensaje",Toast.LENGTH_LONG).show();
+                    }
+                });
+            return null;
+        }
+    }
 
 
 }

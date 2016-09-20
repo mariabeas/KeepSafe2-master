@@ -42,7 +42,6 @@ public class MenuActivity extends AppCompatActivity {
         Button btnSMS=(Button)findViewById(R.id.btnSMS);
 
         Button btnInfo=(Button)findViewById(R.id.btnInfo);
-
         Button btnUbi=(Button)findViewById(R.id.btnUbi);
 
 
@@ -127,7 +126,8 @@ public class MenuActivity extends AppCompatActivity {
                 Intent intentInfo=new Intent(MenuActivity.this,InformacionActivity.class);
                 startActivity(intentInfo);
             }else if(v.getId()==R.id.btnAgenda){
-                Intent intentAgenda=new Intent(MenuActivity.this,AgendaActivity.class);
+                //Intent intentAgenda=new Intent(MenuActivity.this,AgendaActivity.class);
+                Intent intentAgenda=new Intent(MenuActivity.this,AgendaBotonesActivity.class);
                 startActivity(intentAgenda);
             }else if(v.getId()==R.id.btnSMS){
                 Intent intentSMS=new Intent(MenuActivity.this,EnviarSMSActivity.class);

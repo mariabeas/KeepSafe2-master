@@ -137,6 +137,8 @@
         <!--Pantalla de la lista de los datos de prueba-->
         <activity android:name=".ListaDatosActivity"/>
 
+        <!-- Pantalla de la agenda botones-->
+    <activity android:name=".AgendaBotonesActivity"/>
 
 
 

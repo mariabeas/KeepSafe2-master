@@ -23,6 +23,13 @@
         android:src="@drawable/logo"
         android:layout_gravity="right" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btnEnviarSMS"
+        android:id="@+id/btnEnviarSMS"
+        android:layout_marginTop="40dp" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -79,14 +86,6 @@
         android:id="@+id/tvDireccion"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btnEnviarSMS"
-        android:id="@+id/btnEnviarSMS"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp" />
 
 
 </LinearLayout>
