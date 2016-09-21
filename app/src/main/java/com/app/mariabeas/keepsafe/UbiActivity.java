@@ -265,7 +265,6 @@ public class UbiActivity extends AppCompatActivity implements LocationListener {
             tvUbi.setText((int) location.getLatitude());
 
             Location location = locationManager.getLastKnownLocation(proveedor);
-            //CARLOS
             String cadenaLa=location.toString();
             Log.i("LOG DE LATITUD",cadenaLa);
             //
@@ -306,7 +305,7 @@ public class UbiActivity extends AppCompatActivity implements LocationListener {
         startActivity(intent);
 
     }
-    ////+carlos////
+
     public void find_Location(Context con) {
         Log.d("Find Location", "in find_location");
         this.context = con;
@@ -336,7 +335,6 @@ public class UbiActivity extends AppCompatActivity implements LocationListener {
     }
     /////
 
-//////////////////carlos/////////
 public void onLocationChanged(Location location) {
     find_Location(context);
     Log.i("localizacion BUENAAAA", "LATITUD: " + location.getLatitude()

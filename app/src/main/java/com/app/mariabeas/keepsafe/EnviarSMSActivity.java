@@ -158,12 +158,12 @@ public class EnviarSMSActivity extends UbiActivity {
         public void onClick(View v) {
             //PROBAR CON EL WEB SERVICE
             if (v.getId() == R.id.btnEnviarSMS) {
-              /* if (!edtContacto.getText().toString().trim().equalsIgnoreCase("") || !edtSMS.getText().toString().trim().equalsIgnoreCase("")
+               if (!edtContacto.getText().toString().trim().equalsIgnoreCase("") || !edtSMS.getText().toString().trim().equalsIgnoreCase("")
                        || !tvUbi.getText().toString().trim().equalsIgnoreCase("") || !tvDireccion.getText().toString().trim().equalsIgnoreCase("")) {
                     new Insertar(EnviarSMSActivity.this).execute();
                 } else
                    Toast.makeText(EnviarSMSActivity.this, "Campos sin rellenar, reviselos", Toast.LENGTH_LONG).show();
-            */
+
                 new Insertar(EnviarSMSActivity.this).execute();
             }
 
@@ -221,7 +221,7 @@ public class EnviarSMSActivity extends UbiActivity {
     private boolean insertar(){
         HttpClient httpClient=new DefaultHttpClient();
         List<NameValuePair> nameValuePairs;
-        HttpPost httpPost=new HttpPost("http://192.168.1.36:8888/hmis2015/insert.php");
+        HttpPost httpPost=new HttpPost("http://192.168.1.34:8888/hmis2015/insert.php");
         nameValuePairs=new ArrayList<>(4);
         //añadimos nuestros datos
         nameValuePairs.add(new BasicNameValuePair("telefono",edtContacto.getText().toString().trim()));

@@ -1,5 +1,6 @@
 package com.app.mariabeas.keepsafe;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.CursorLoader;
@@ -9,23 +10,36 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Maria on 02/02/2016.
@@ -74,10 +88,92 @@ public class RegistroActivity extends AppCompatActivity {
         edtSangre=(EditText)findViewById(R.id.edtSangre);
         edtNum=(EditText)findViewById(R.id.edtNum);
 
+        //SPINNERS PARA LOS TIPOS DE SANGRE DEL USUARIO
+        Spinner spinnerSangre=(Spinner)findViewById(R.id.spinnerSangre);
+        ArrayList tiposSangre=new ArrayList();
+        tiposSangre.add("A+");
+        tiposSangre.add("A-");
+        tiposSangre.add("B+");
+        tiposSangre.add("B-");
+        tiposSangre.add("AB+");
+        tiposSangre.add("AB-");
+        tiposSangre.add("O+");
+        tiposSangre.add("0-");
+        spinnerSangre.setAdapter(new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,tiposSangre));
+
+        //SPINNERS PARA EL SEXO DEL USUARIO
+        Spinner spinnerSexo=(Spinner)findViewById(R.id.spinnerSexo);
+        ArrayList tiposSexo=new ArrayList();
+        tiposSexo.add("Hombre");
+        tiposSexo.add("Mujer");
+        spinnerSexo.setAdapter(new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,tiposSexo));
+
         MiListener listener=new MiListener();
         btnAceptar.setOnClickListener(listener);
         FloatingActionButton btnFoto = (FloatingActionButton) findViewById(R.id.btnFoto);
         btnFoto.setOnClickListener(listener);
+    }
+
+    //METODO PARA ENVIAR LA INFO DEL REGISTRO AL WEB SERVICE
+    private boolean insertarUsuario(){
+        HttpClient httpClient=new DefaultHttpClient();
+        List<NameValuePair> nameValuePairs;
+        HttpPost httpPost=new HttpPost("http://192.168.1.34:8888/hmis2015/insertUsuario.php");
+        nameValuePairs=new ArrayList<>(8);
+        //añadimos nuestros datos
+        nameValuePairs.add(new BasicNameValuePair("email",edtUsuario.getText().toString().trim()));
+        nameValuePairs.add(new BasicNameValuePair("password",edtPass.getText().toString().trim()));
+        nameValuePairs.add(new BasicNameValuePair("nombre",edtNombre.getText().toString().trim()));
+        nameValuePairs.add(new BasicNameValuePair("apellido",edtApellido.getText().toString().trim()));
+        nameValuePairs.add(new BasicNameValuePair("fechaNac",edtFecha.getText().toString().trim()));
+        nameValuePairs.add(new BasicNameValuePair("sexo",edtSexo.getText().toString().trim()));
+        nameValuePairs.add(new BasicNameValuePair("sangre",edtSangre.getText().toString().trim()));
+        nameValuePairs.add(new BasicNameValuePair("numSegSocial",edtNum.getText().toString().trim()));
+        try{
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            httpClient.execute(httpPost);
+            return true;
+
+        }catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    //CLASE INTERNA QUE HEREDE DE ASYNCTASK
+    class InsertarUsuario extends AsyncTask<String,String,String> {
+        private Activity context;
+        InsertarUsuario (Activity context){
+            this.context=context;
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            if(insertarUsuario())
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(context,"Usuario registrado con éxito",Toast.LENGTH_LONG).show();
+                        //PARA LIMPIAR EL TEXTO DE LA PANTALLA NO ES NECESARIO
+                        // edtContacto.setText("");
+                        //edtSMS.setText("");
+                        //tvUbi.setText("");
+                        //tvDireccion.setText("");
+                    }
+                });
+            else
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(context,"Error al registrar al usuario",Toast.LENGTH_LONG).show();
+                    }
+                });
+            return null;
+        }
     }
 
     //clase privada para implementar la funcionalidad de los botones de la activity
@@ -87,19 +183,24 @@ public class RegistroActivity extends AppCompatActivity {
             String usuario=edtUsuario.getText().toString();
             String pass=edtPass.getText().toString();
             String confiPass=edtConfiPass.getText().toString();
-           // String nombre=edtNombre.getText().toString();
+            //String nombre=edtNombre.getText().toString();
             String nombre=((EditText)findViewById(R.id.edtNombreAgenda)).getText().toString();
             String apellido=((EditText)findViewById(R.id.edtApellido)).getText().toString();
             String fecha=((EditText)findViewById(R.id.edtFecha)).getText().toString();
             String sexo=((EditText)findViewById(R.id.edtSexo)).getText().toString();
             String sangre=((EditText)findViewById(R.id.edtSangre)).getText().toString();
             String num=((EditText)findViewById(R.id.edtNum)).getText().toString();
-            // String foto=((Button)findViewById(R.id.btnFoto)).getText().toString();
+            //String foto=((Button)findViewById(R.id.btnFoto)).getText().toString();
+
+            ////SPINNERS! PONERLOS VISIBLES TAMBIEN EN REGISTRO.XML
+            //String sangre=((Spinner)findViewById(R.id.spinnerSangre)).getSelectedItem().toString();
+            //String sexo=((Spinner)findViewById(R.id.spinnerSexo)).getSelectedItem().toString();
             if (v.getId() == R.id.btnFoto) {
                 selectImage();
             }
             if(v.getId()==R.id.btnAceptar) {
-                if(usuario.isEmpty()||pass.isEmpty()||confiPass.isEmpty()){
+                //PROBAR CON EL WEB SERVICE
+               if(usuario.isEmpty()||pass.isEmpty()||confiPass.isEmpty()){
                     Toast.makeText(getApplicationContext(), "Compruebe que los campos no esten vacíos", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -108,6 +209,7 @@ public class RegistroActivity extends AppCompatActivity {
                     return;
                 }
                 else{
+                    new InsertarUsuario(RegistroActivity.this).execute();
                     LoginDataBaseAdapter.insertEntry(usuario,pass,nombre,apellido,fecha,sexo,sangre,num);
                     Toast.makeText(getApplicationContext(), "Registro completado", Toast.LENGTH_SHORT).show();
                     //PARA PASAR DE UNA PANTALLA A OTRA
@@ -115,11 +217,19 @@ public class RegistroActivity extends AppCompatActivity {
                     startActivity(intentactivity);
 
                     Intent i=new Intent(RegistroActivity.this,MainActivity.class);
-                    i.putExtra("nombre",edtNombre.getText()+"");
-                    i.putExtra("usuario",edtUsuario.getText());
-                    i.putExtra("fecha",edtFecha.getText());
+                    i.putExtra("email",edtUsuario.getText());
+                    i.putExtra("password", edtPass.getText());
                     startActivity(i);
 
+                   /* Intent datosUsuario=new Intent(RegistroActivity.this,DatosGuardadosActivity.class);
+                    datosUsuario.putExtra("email",edtUsuario.getText());
+                    datosUsuario.putExtra("nombre",edtNombre.getText());
+                    datosUsuario.putExtra("apellido",edtApellido.getText());
+                    datosUsuario.putExtra("fechaNac",edtFecha.getText());
+                    datosUsuario.putExtra("sexo",edtSexo.getText());
+                    datosUsuario.putExtra("sangre",edtSangre.getText());
+                    datosUsuario.putExtra("numSegSocial",edtNum.getText());
+                    startActivity(datosUsuario);*/
 
 
                 }

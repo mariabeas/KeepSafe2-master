@@ -40,7 +40,6 @@ public class DatosGuardadosActivity extends AppCompatActivity {
         loginDBAdapter=loginDBAdapter.open();
 
         tvUsuario=(TextView)findViewById(R.id.edtUsuario);
-        //nombre=getIntent().getStringExtra("nombre");
         tvNombre=(TextView)findViewById(R.id.edtNombreAgenda);
         tvNombre.setText(getIntent().getStringExtra("nombre"));
         tvEmail=(TextView)findViewById(R.id.edtUser);
@@ -100,6 +99,26 @@ public class DatosGuardadosActivity extends AppCompatActivity {
             Log.e("sexo: " + sexos[i], "grupo sanguineo" + sangres[i]);
 
         }
+
+       /* String emailUsuario=getIntent().getStringExtra("email");
+        tvUsuario.setText(emailUsuario);
+        String nombreUsuario=getIntent().getStringExtra("nombre");
+        tvNombre.setText(nombreUsuario);
+
+        String apellidoUsuario=getIntent().getStringExtra("apellido");
+        tvApellido.setText(apellidoUsuario);
+
+        String fechaNacUsuario=getIntent().getStringExtra("fechaNac");
+        tvFecha.setText(fechaNacUsuario);
+
+        String sexoUsuario=getIntent().getStringExtra("sexo");
+        tvSexo.setText(sexoUsuario);
+
+        String sangreUsuario=getIntent().getStringExtra("sangre");
+        tvSangre.setText(sangreUsuario);
+
+        String numSegSocialUsuario=getIntent().getStringExtra("numSegSocial");
+        tvNum.setText(numSegSocialUsuario);*/
 
         //RECUPERAMOS EL REGISTRO CON EL ID
 

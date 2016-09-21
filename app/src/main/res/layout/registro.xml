@@ -167,6 +167,28 @@
         android:layout_above="@+id/edtUsuario"
         android:layout_toLeftOf="@+id/logo"
         android:layout_toStartOf="@+id/logo" />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/spinnerSangre"
+        android:layout_above="@+id/edtNum"
+        android:layout_alignRight="@+id/edtSexo"
+        android:layout_alignEnd="@+id/edtSexo"
+        android:layout_toRightOf="@+id/face"
+        android:layout_toEndOf="@+id/face"
+        android:spinnerMode="dialog"
+       android:visibility="invisible"
+        />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerSexo"
+        android:layout_above="@+id/edtSangre"
+        android:layout_alignLeft="@+id/edtFecha"
+        android:layout_alignStart="@+id/edtFecha"
+        android:spinnerMode="dialog"
+        android:visibility="invisible"/>
 </RelativeLayout>
 
 
