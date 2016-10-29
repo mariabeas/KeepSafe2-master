@@ -482,6 +482,7 @@
     <string name="edtConfirmarPass">Confirmar contraseña</string>
     <string name="edtContacto">Introduzca el teléfono </string>
     <string name="edtFecha">Fecha de nacimiento</string>
+    <string name="edtIdUser">Id del usuario</string>
     <string name="edtNombre">Nombre</string>
     <string name="edtNombreAgenda">Nombre</string>
     <string name="edtNuevaPass">Nueva contraseña</string>

@@ -5,10 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by MariaBeas on 16/2/16.
@@ -47,6 +45,12 @@ public class AdapterUsuario extends BaseAdapter {
         }
         //COGER LOS DATOS DEL LAYOUT QUE HEMOS INTRODUCIDO EN DATOS
         EditText edtUserEmail=(EditText)convertView.findViewById(R.id.edtUser);
+
+        //NUEVO!!!!!!
+        String email=getItem(position).toString();
+        edtUserEmail.setText(email);
+
+
         EditText edtNombreAgenda=(EditText)convertView.findViewById(R.id.edtNombreAgenda);
         EditText edtApellido=(EditText)convertView.findViewById(R.id.edtApellido);
         EditText edtFecha=(EditText)convertView.findViewById(R.id.edtFecha);

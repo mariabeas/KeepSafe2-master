@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * Created by Maria on 01/02/2016.
@@ -25,9 +26,31 @@ public class MenuActivity extends AppCompatActivity {
     ImageView logo;
     Context context=this;
 
+    //////PRUEBAAAAA
+    public String email,nombre,apellido,fecha,sexo,sangre,num;
+    DatabaseHelper helper=new DatabaseHelper(this);
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
+
+        ////////
+        email=getIntent().getStringExtra("emailUsuario");
+
+        nombre=getIntent().getStringExtra("nombreUsuario");
+        apellido=getIntent().getStringExtra("apellidoUsuario");
+        fecha=getIntent().getStringExtra("fechaUsuario");
+        sexo=getIntent().getStringExtra("sexoUsuario");
+        sangre=getIntent().getStringExtra("sangreUsuario");
+        num=getIntent().getStringExtra("numUsuario");
+        /////////
+        nombre=helper.obtenerNombre(email);
+        apellido=helper.obtenerApellido(email);
+        fecha=helper.obtenerFecha(email);
+        sexo=helper.obtenerSexo(email);
+        sangre=helper.obtenerSangre(email);
+        num=helper.obtenerNum(email);
+        /////////////////
 
         //Declaramos el toolbar del menu datos
         Toolbar toolbar = (Toolbar) findViewById(R.id.menu_datos);
@@ -43,6 +66,9 @@ public class MenuActivity extends AppCompatActivity {
 
         Button btnInfo=(Button)findViewById(R.id.btnInfo);
         Button btnUbi=(Button)findViewById(R.id.btnUbi);
+
+        //TEXTVIEW QUE ME MUESTRE EL ID DEL USUARIO QUE HA ENTRADO
+        TextView tvId=(TextView)findViewById(R.id.tvId);
 
 
         MiListener listener=new MiListener();
@@ -116,8 +142,21 @@ public class MenuActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if(v.getId()==R.id.btnDatos) {
+
                 //PARA PASAR DE UNA PANTALLA A OTRA
                 Intent intentDatos = new Intent(MenuActivity.this, DatosGuardadosActivity.class);
+
+                /////////////////
+                intentDatos.putExtra("emailUsuario",email);
+
+                intentDatos.putExtra("nombreUsuario",nombre);
+                intentDatos.putExtra("apellidoUsuario",apellido);
+                intentDatos.putExtra("fechaUsuario",fecha);
+                intentDatos.putExtra("sexoUsuario",sexo);
+                intentDatos.putExtra("sangreUsuario",sangre);
+                intentDatos.putExtra("numUsuario",num);
+                //////////////
+
                 startActivity(intentDatos);
 
 

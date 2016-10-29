@@ -1,5 +1,6 @@
 package com.app.mariabeas.keepsafe;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.CursorLoader;
@@ -9,11 +10,11 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,16 +24,27 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Maria on 02/02/2016.
  */
-public class DatosActivity extends AppCompatActivity {
+public class DatosActivity extends RegistroActivity {
     ImageView logo;
     ImageView avatar;
     EditText edtUser;
@@ -44,8 +56,17 @@ public class DatosActivity extends AppCompatActivity {
     EditText edtNum;
     final int CAMERA_REQUEST;
     final int SELECT_FILE;
+
+    //PARA PODER USAR LOS METODOS CREADOS EN DATABASEHELPER
+    DatabaseHelper helper=new DatabaseHelper(this);
+
     //CODIGO DE ENVIO DE LOS DATOS A DATOS GUARDADOS
     public final static int ADD_REQUEST_CODE = 1;
+
+
+    //PARA MOSTRAR LOS DATOS DEL WEBSERVICE
+    private int posicion=0;
+    private List listaUsuarios;
 
     Context context=this;
     LoginDataBaseAdapter loginDBAdapter;
@@ -64,15 +85,53 @@ public class DatosActivity extends AppCompatActivity {
         //ELEMENTOS DE LA INTERFAZ
         logo=(ImageView)findViewById(R.id.logo);
         avatar=(ImageView)findViewById(R.id.avatarGuardado);
+
         edtUser=(EditText)findViewById(R.id.edtUser);
+        edtUser.setText(getIntent().getStringExtra("email"));
+
         edtNombre=(EditText)findViewById(R.id.edtNombreAgenda);
+        edtNombre.setText(getIntent().getStringExtra("nombre"));
+
         edtApellido=(EditText)findViewById(R.id.edtApellido);
+        edtApellido.setText(getIntent().getStringExtra("apellido"));
+
         edtFecha=(EditText)findViewById(R.id.edtFecha);
+        edtFecha.setText(getIntent().getStringExtra("fecha"));
+
         edtSexo=(EditText)findViewById(R.id.edtSexo);
+        edtSexo.setText(getIntent().getStringExtra("sexo"));
+
         edtSangre=(EditText)findViewById(R.id.edtSangre);
+        edtSangre.setText(getIntent().getStringExtra("sangre"));
+
         edtNum=(EditText)findViewById(R.id.edtNum);
+        edtNum.setText(getIntent().getStringExtra("num"));
 
 
+        //WEB SERVICE
+        listaUsuarios=new ArrayList();
+
+       /* //coger datos del usuario guardados
+        String email=getIntent().getStringExtra("email");
+        edtUser.setText(email);
+
+        String nombre=getIntent().getStringExtra("nombre");
+        edtNombre.setText(nombre);
+
+        String apellido=getIntent().getStringExtra("apellido");
+        edtApellido.setText(apellido);
+
+        String fechaNac=getIntent().getStringExtra("fechaNac");
+        edtFecha.setText(fechaNac);
+
+        String sexo=getIntent().getStringExtra("sexo");
+        edtSexo.setText(sexo);
+
+        String sangre=getIntent().getStringExtra("sangre");
+        edtSangre.setText(sangre);
+
+        String numSegSocial=getIntent().getStringExtra("numSegSocial");
+        edtNum.setText(numSegSocial);*/
 
         //Crear una instancia de SQLiteDataBase
         loginDBAdapter = new LoginDataBaseAdapter(this);
@@ -88,14 +147,90 @@ public class DatosActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Modificar datos");
 
-
-
-
         FloatingActionButton btnFoto = (FloatingActionButton) findViewById(R.id.btnFoto);
         MiListener listener = new MiListener();
         btnFoto.setOnClickListener(listener);
 
 
+    }
+    //METODO PARA ENVIAR LA INFO DEL REGISTRO AL WEB SERVICE
+    private boolean updateUsuario(){
+        HttpClient httpClient=new DefaultHttpClient();
+        List<NameValuePair> nameValuePairs;
+        HttpPost httpPost=new HttpPost("http://192.168.1.41:8888/hmis2015/updateUsuario.php");
+        nameValuePairs=new ArrayList<>(8);
+        //añadimos nuestros datos
+        nameValuePairs.add(new BasicNameValuePair("email",edtUsuario.getText().toString().trim()));
+        //nameValuePairs.add(new BasicNameValuePair("password",edtPass.getText().toString().trim()));
+        nameValuePairs.add(new BasicNameValuePair("nombre",edtNombre.getText().toString().trim()));
+        nameValuePairs.add(new BasicNameValuePair("apellido",edtApellido.getText().toString().trim()));
+        nameValuePairs.add(new BasicNameValuePair("fechaNac",edtFecha.getText().toString().trim()));
+        nameValuePairs.add(new BasicNameValuePair("sexo",edtSexo.getText().toString().trim()));
+        nameValuePairs.add(new BasicNameValuePair("sangre",edtSangre.getText().toString().trim()));
+        nameValuePairs.add(new BasicNameValuePair("numSegSocial",edtNum.getText().toString().trim()));
+        try{
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            httpClient.execute(httpPost);
+            return true;
+
+        }catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    //METODO PARA QUE NO PODAMOS MODIFICAR EL CAMPO EMAIL (COMO SI FUERA EL ID)
+    private boolean compruebaEmail(){
+        for(int i=0;i<listaUsuarios.size();i++){
+            UsuariosApp u= (UsuariosApp) listaUsuarios.get(i);
+            if(edtUser.getText().toString().trim().equalsIgnoreCase(u.getEmail().toString().trim())){
+                return true;
+            }
+        }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(DatosActivity.this,"El registro no existe",Toast.LENGTH_LONG).show();
+            }
+        });
+        return false;
+    }
+
+    //CLASE INTERNA QUE HEREDE DE ASYNCTASK
+    class UpdateUsuario extends AsyncTask<String,String,String> {
+        private Activity context;
+        UpdateUsuario (Activity context){
+            this.context=context;
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            if(updateUsuario())
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(context,"Datos actualizados con éxito",Toast.LENGTH_LONG).show();
+                        //PARA LIMPIAR EL TEXTO DE LA PANTALLA NO ES NECESARIO
+                        // edtContacto.setText("");
+                        //edtSMS.setText("");
+                        //tvUbi.setText("");
+                        //tvDireccion.setText("");
+
+                    }
+                });
+            else
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(context,"Error al actualizar los datos",Toast.LENGTH_LONG).show();
+                    }
+                });
+            return null;
+        }
     }
 
 
@@ -127,6 +262,7 @@ public class DatosActivity extends AppCompatActivity {
 
             case R.id.action_save:
                 guardarDatos();
+                new UpdateUsuario(DatosActivity.this).execute();
                 return true;
             case R.id.action_logout:
                 cerrarSesion();
@@ -143,24 +279,35 @@ public class DatosActivity extends AppCompatActivity {
         startActivity(intentactivity);
     }
     public void guardarDatos(){
-        String usuario=((EditText)findViewById(R.id.edtUser)).getText().toString();
-        String nombre=((EditText)findViewById(R.id.edtNombreAgenda)).getText().toString();
+        String email=edtUser.getText().toString();
+        String nombre=edtNombre.getText().toString();
+        String apellido=edtApellido.getText().toString();
+        String fecha=edtFecha.getText().toString();
+        String sexo=edtSexo.getText().toString();
+        String sangre=edtSangre.getText().toString();
+        String num=edtNum.getText().toString();
+        int id=helper.obtenerID(email);
+
+       /* String usuario=((EditText)findViewById(R.id.edtUser)).getText().toString();
+        //String nombre=((EditText)findViewById(R.id.edtNombreAgenda)).getText().toString();
         String apellido=((EditText)findViewById(R.id.edtApellido)).getText().toString();
         String fecha=((EditText)findViewById(R.id.edtFecha)).getText().toString();
         String sexo=((EditText)findViewById(R.id.edtSexo)).getText().toString();
         String sangre=((EditText)findViewById(R.id.edtSangre)).getText().toString();
         String num=((EditText)findViewById(R.id.edtNum)).getText().toString();
-        // String foto=((Button)findViewById(R.id.btnFoto)).getText().toString();
+        // String foto=((Button)findViewById(R.id.btnFoto)).getText().toString();*/
 
         //comprobar que los campos no estan vacios
-        if (nombre.equals(null) || usuario.equals(null) || apellido.equals(null) ||
+        if (nombre.equals(null) || email.equals(null) || apellido.equals(null) ||
                 fecha.equals(null) || sexo.equals(null) || sangre.equals(null) || num.equals(null)) {
             Toast.makeText(getApplicationContext(), "Completa los datos", Toast.LENGTH_SHORT).show();
             return;
 
         } else{
             //GUARDAR DATOS
+            helper.modificarUsuario(id,email,nombre,apellido,fecha,sexo,sangre,num);
             Intent intentGuardar=new Intent (DatosActivity.this,DatosGuardadosActivity.class);
+           // intentGuardar.putExtra("email",edtUser.getText().toString());
             intentGuardar.putExtra("nombre",edtNombre.getText().toString());
             intentGuardar.putExtra("email",edtUser.getText().toString());
             intentGuardar.putExtra("apellido",edtApellido.getText().toString());
@@ -169,9 +316,13 @@ public class DatosActivity extends AppCompatActivity {
             intentGuardar.putExtra("sangre",edtSangre.getText().toString());
             intentGuardar.putExtra("numSeguridad",edtNum.getText().toString());
             intentGuardar.putExtra("image",R.drawable.avatar);
-            startActivity(intentGuardar);
 
-            LoginDataBaseAdapter.updateEntry(usuario, nombre, apellido, fecha, sexo, sangre, num);
+           startActivity(intentGuardar);
+
+            //new InsertarUsuario(DatosActivity.this).execute();
+
+
+           // LoginDataBaseAdapter.updateEntry(usuario, nombre, apellido, fecha, sexo, sangre, num);
             Toast.makeText(getApplicationContext(), "Datos modificados", Toast.LENGTH_SHORT).show();
 
 
@@ -281,7 +432,6 @@ public class DatosActivity extends AppCompatActivity {
             }
         }
     }
-
 
     @Override
     protected void onDestroy() {

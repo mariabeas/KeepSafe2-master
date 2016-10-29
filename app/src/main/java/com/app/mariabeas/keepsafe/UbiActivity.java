@@ -227,19 +227,16 @@ public class UbiActivity extends AppCompatActivity implements LocationListener {
 
 
     //METODO BUENO!!!
-    public void MostrarLocalizacion() {
 
+    public void MostrarLocalizacion() {
         if(location!=null) {
-            //String ubicacion="Mi ubicación actual es: "+"\n Latitud= "+loc.getLatitude()+"\n Longitud= "+loc.getLongitude();
-            String ubicacion = "Mi ubicación actual es: " + "\n Latitud: " + valueOf(location.getLatitude() + Math.random() * 10) + "\n Longitud: "
+             String ubicacion = "Mi ubicación actual es: " + "\n Latitud: " + valueOf(location.getLatitude()
+                    + Math.random() * 10) + "\n Longitud: "
                     + valueOf(location.getLongitude());
 
-            //tvDireccion.setText(ubicacion);
             Toast.makeText(context, ubicacion, Toast.LENGTH_SHORT).show();
-            //this.tvDireccion.setText(valueOf(location));
             tvUbi.setText(ubicacion);
         }
-
         //DIRECCION!!!!!!!!
         Geocoder geocoder=new Geocoder(context);
         List<Address> direcciones=null;
@@ -256,8 +253,6 @@ public class UbiActivity extends AppCompatActivity implements LocationListener {
                     direccion.getCountryName());
             tvDireccion.setText(direccionText);
         }
-
-
     }
     private void getLocation() {
 
@@ -365,8 +360,7 @@ public void onLocationChanged(Location location) {
     }
 
     private void setUpMapIfNeeded() {
-// Configuramos el objeto GoogleMaps con valores iniciales.
-
+    // Configuramos el objeto GoogleMaps con valores iniciales.
         if (googleMapa == null) {
             //Instanciamos el objeto mMap a partir del MapFragment definido bajo el Id "map"
             googleMapa = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
@@ -374,15 +368,11 @@ public void onLocationChanged(Location location) {
             if (googleMapa != null) {
                 // El objeto GoogleMap ha sido referenciado correctamente
                 //ahora podemos manipular sus propiedades
-
                 //Seteamos el tipo de mapa
                 googleMapa.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
                 //Activamos la capa o layer MyLocation
                 googleMapa.setMyLocationEnabled(true);
             }
         }
     }
-
-
 }

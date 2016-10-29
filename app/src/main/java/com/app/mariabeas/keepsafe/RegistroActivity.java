@@ -60,7 +60,9 @@ public class RegistroActivity extends AppCompatActivity {
     final int SELECT_FILE;
     Context context=this;
 
-    LoginDataBaseAdapter loginDBAdapter;
+
+    LoginDataBaseAdapter loginDBAdapter=new LoginDataBaseAdapter(context);
+
 
     public RegistroActivity() {
         SELECT_FILE = 1;
@@ -118,7 +120,7 @@ public class RegistroActivity extends AppCompatActivity {
     private boolean insertarUsuario(){
         HttpClient httpClient=new DefaultHttpClient();
         List<NameValuePair> nameValuePairs;
-        HttpPost httpPost=new HttpPost("http://192.168.1.34:8888/hmis2015/insertUsuario.php");
+        HttpPost httpPost=new HttpPost("http://172.20.56.250:8888/hmis2015/insertUsuario.php");
         nameValuePairs=new ArrayList<>(8);
         //añadimos nuestros datos
         nameValuePairs.add(new BasicNameValuePair("email",edtUsuario.getText().toString().trim()));
@@ -183,13 +185,20 @@ public class RegistroActivity extends AppCompatActivity {
             String usuario=edtUsuario.getText().toString();
             String pass=edtPass.getText().toString();
             String confiPass=edtConfiPass.getText().toString();
-            //String nombre=edtNombre.getText().toString();
-            String nombre=((EditText)findViewById(R.id.edtNombreAgenda)).getText().toString();
+            ///////////////
+            String nombre=edtNombre.getText().toString();
+            String apellido=edtApellido.getText().toString();
+            String fecha=edtFecha.getText().toString();
+            String sexo=edtSexo.getText().toString();
+            String sangre=edtSangre.getText().toString();
+            String num=edtNum.getText().toString();
+            /*String nombre=((EditText)findViewById(R.id.edtNombreAgenda)).getText().toString();
             String apellido=((EditText)findViewById(R.id.edtApellido)).getText().toString();
             String fecha=((EditText)findViewById(R.id.edtFecha)).getText().toString();
             String sexo=((EditText)findViewById(R.id.edtSexo)).getText().toString();
             String sangre=((EditText)findViewById(R.id.edtSangre)).getText().toString();
-            String num=((EditText)findViewById(R.id.edtNum)).getText().toString();
+            String num=((EditText)findViewById(R.id.edtNum)).getText().toString();*/
+
             //String foto=((Button)findViewById(R.id.btnFoto)).getText().toString();
 
             ////SPINNERS! PONERLOS VISIBLES TAMBIEN EN REGISTRO.XML
@@ -199,7 +208,6 @@ public class RegistroActivity extends AppCompatActivity {
                 selectImage();
             }
             if(v.getId()==R.id.btnAceptar) {
-                //PROBAR CON EL WEB SERVICE
                if(usuario.isEmpty()||pass.isEmpty()||confiPass.isEmpty()){
                     Toast.makeText(getApplicationContext(), "Compruebe que los campos no esten vacíos", Toast.LENGTH_SHORT).show();
                     return;
@@ -208,28 +216,38 @@ public class RegistroActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                else{
+                if(edtNum.length()<12 || edtNum.length()>12){
+                    Toast.makeText(getApplicationContext(),"El número de seguridad social debe tener 12 dígitos",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else {
+
+                    //INSERTAR USUARIO EN EL SERVIDOR A LA VEZ
                     new InsertarUsuario(RegistroActivity.this).execute();
-                    LoginDataBaseAdapter.insertEntry(usuario,pass,nombre,apellido,fecha,sexo,sangre,num);
+                    loginDBAdapter.insertEntry(usuario,pass,nombre,apellido,fecha,sexo,sangre,num);
                     Toast.makeText(getApplicationContext(), "Registro completado", Toast.LENGTH_SHORT).show();
                     //PARA PASAR DE UNA PANTALLA A OTRA
-                    Intent intentactivity = new Intent(RegistroActivity.this, MainActivity.class);
-                    startActivity(intentactivity);
+                    //Intent intentactivity = new Intent(RegistroActivity.this, MainActivity.class);
+                    //startActivity(intentactivity);
 
                     Intent i=new Intent(RegistroActivity.this,MainActivity.class);
-                    i.putExtra("email",edtUsuario.getText());
-                    i.putExtra("password", edtPass.getText());
+                    //PASAMOS LOS DATOS AL MAIN
+                   //i.putExtra("emailUsuario",edtUsuario.getText());
+                    //i.putExtra("password", edtPass.getText());
+
+                    /////////NUEVOS
+                    i.putExtra("nombreUsuario",nombre);
+                    i.putExtra("apellidoUsuario",apellido);
+                    i.putExtra("fechaUsuario",fecha);
+                    i.putExtra("sexoUsuario",sexo);
+                    i.putExtra("sangreUsuario",sangre);
+                    i.putExtra("numUsuario",num);
+                    //////////////////////
+
+
                     startActivity(i);
 
-                   /* Intent datosUsuario=new Intent(RegistroActivity.this,DatosGuardadosActivity.class);
-                    datosUsuario.putExtra("email",edtUsuario.getText());
-                    datosUsuario.putExtra("nombre",edtNombre.getText());
-                    datosUsuario.putExtra("apellido",edtApellido.getText());
-                    datosUsuario.putExtra("fechaNac",edtFecha.getText());
-                    datosUsuario.putExtra("sexo",edtSexo.getText());
-                    datosUsuario.putExtra("sangre",edtSangre.getText());
-                    datosUsuario.putExtra("numSegSocial",edtNum.getText());
-                    startActivity(datosUsuario);*/
+
 
 
                 }

@@ -22,13 +22,17 @@ public class MainActivity extends AppCompatActivity {
     LoginDataBaseAdapter loginDBAdapter;
     EditText edtNombre;
 
-    String nombre;
+    //////PRUEBAAAAA
+    public String email,nombre,apellido,fecha,sexo,sangre,num;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         //Crear una instancia de SQLiteDataBase
         loginDBAdapter = new LoginDataBaseAdapter(this);
@@ -43,7 +47,16 @@ public class MainActivity extends AppCompatActivity {
         logo = (ImageView) findViewById(R.id.logo);
         Button btnRecuperar = (Button) findViewById(R.id.btnRecuperar);
         edtNombre=(EditText)findViewById(R.id.edtNombreAgenda);
-        nombre=getIntent().getStringExtra("nombre");
+       // nombre=getIntent().getStringExtra("nombre");
+
+        /////////////
+        nombre=getIntent().getStringExtra("nombreUsuario");
+        apellido=getIntent().getStringExtra("apellidoUsuario");
+        fecha=getIntent().getStringExtra("fechaUsuario");
+        sexo=getIntent().getStringExtra("sexoUsuario");
+        sangre=getIntent().getStringExtra("sangreUsuario");
+        num=getIntent().getStringExtra("numUsuario");
+        /////////////////
 
 
         MiListener listener = new MiListener();
@@ -59,19 +72,30 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-
             if(v.getId()==R.id.btnInicio) {
                 String user=edtUser.getText().toString();
                 String contra=edtPassword.getText().toString();
                 String storedPassword=loginDBAdapter.getSingleEntry(user);
+                //String nombre=edtNombre.getText().toString();
 
                 if (contra.equals(storedPassword)) {
-
                     Log.d("entrando", "e");
                     Toast.makeText(getApplicationContext(), "¡Bienvenido " + user + "!", Toast.LENGTH_LONG).show();
-
                     //PASAR A LA SIGUIENTE PANTALLA
                     Intent nuevoIntent = new Intent(MainActivity.this, MenuActivity.class);
+
+                    //NUEVOOOOOO
+                    nuevoIntent.putExtra("emailUsuario",user);
+
+                    nuevoIntent.putExtra("nombreUsuario",nombre);
+                    nuevoIntent.putExtra("apellidoUsuario",apellido);
+                    nuevoIntent.putExtra("fechaUsuario",fecha);
+                    nuevoIntent.putExtra("sexoUsuario",sexo);
+                    nuevoIntent.putExtra("sangreUsuario",sangre);
+                    nuevoIntent.putExtra("numUsuario",num);
+                    //////
+
+
                     startActivity(nuevoIntent);
                     finish();
                 } else {

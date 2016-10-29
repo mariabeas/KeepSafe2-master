@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,10 +15,23 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by MariaBeas on 16/2/16.
  */
 public class DatosGuardadosActivity extends AppCompatActivity {
+
     TextView tvNombre;
     TextView tvEmail;
     TextView tvApellido;
@@ -25,38 +39,58 @@ public class DatosGuardadosActivity extends AppCompatActivity {
     TextView tvSexo;
     TextView tvSangre;
     TextView tvNum;
+
+
     ImageView image;
     TextView tvUsuario;
     Context context=this;
 
+    //PARA PODER USAR LOS METODOS CREADOS EN DATABASEHELPER
+    DatabaseHelper helper=new DatabaseHelper(this);
+
     LoginDataBaseAdapter loginDBAdapter;
+
+    //PARA MOSTRAR LOS DATOS DEL WEBSERVICE
+    private int posicion=0;
+    private List listaUsuarios;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.datos_guardados);
+
 
         //Crear una instancia de SQLiteDataBase
         loginDBAdapter=new LoginDataBaseAdapter(this);
         loginDBAdapter=loginDBAdapter.open();
 
         tvUsuario=(TextView)findViewById(R.id.edtUsuario);
+
         tvNombre=(TextView)findViewById(R.id.edtNombreAgenda);
-        tvNombre.setText(getIntent().getStringExtra("nombre"));
+        tvNombre.setText(getIntent().getStringExtra("nombreUsuario"));
+
         tvEmail=(TextView)findViewById(R.id.edtUser);
-        tvEmail.setText(getIntent().getStringExtra("email"));
+        tvEmail.setText(getIntent().getStringExtra("emailUsuario"));
+
         tvApellido=(TextView)findViewById(R.id.edtApellido);
-        tvApellido.setText(getIntent().getStringExtra("apellido"));
+        tvApellido.setText(getIntent().getStringExtra("apellidoUsuario"));
         tvFecha=(TextView)findViewById(R.id.edtFecha);
-        tvFecha.setText(getIntent().getStringExtra("fecha"));
+        tvFecha.setText(getIntent().getStringExtra("fechaUsuario"));
         tvSexo=(TextView)findViewById(R.id.edtSexo);
-        tvSexo.setText(getIntent().getStringExtra("sexo"));
+        tvSexo.setText(getIntent().getStringExtra("sexoUsuario"));
         tvSangre=(TextView)findViewById(R.id.edtSangre);
-        tvSangre.setText(getIntent().getStringExtra("sangre"));
+        tvSangre.setText(getIntent().getStringExtra("sangreUsuario"));
         tvNum=(TextView)findViewById(R.id.edtNum);
-        tvNum.setText(getIntent().getStringExtra("numSeguridad"));
+        tvNum.setText(getIntent().getStringExtra("numUsuario"));
         image=(ImageView)findViewById(R.id.imageView);
         int image_link=getIntent().getIntExtra("image", R.drawable.avatar);
         image.setImageResource(image_link);
+
+        //WEB SERVICE
+        listaUsuarios=new ArrayList();
+
+        //PARA EJECUTAR EL MOSTRAR USUARIOS (HAY QUE MODIFICARLO PARA QUE SOLO MUESTRE 1 USUARIO NO TODOS
+        //new Mostrar().execute();
 
         //Declaramos el toolbar del menu datos guardados
         Toolbar toolbar = (Toolbar) findViewById(R.id.menu_datos);
@@ -100,6 +134,7 @@ public class DatosGuardadosActivity extends AppCompatActivity {
 
         }
 
+
        /* String emailUsuario=getIntent().getStringExtra("email");
         tvUsuario.setText(emailUsuario);
         String nombreUsuario=getIntent().getStringExtra("nombre");
@@ -142,7 +177,80 @@ public class DatosGuardadosActivity extends AppCompatActivity {
         }
 
 
+
     }
+    //METODO PARA OBTENER LOS DATOS DEL SERVIDOR EN FORMA DE STRING
+    private String mostrar(){
+        String resquest="";
+        HttpClient httpClient=new DefaultHttpClient();
+        HttpPost httpPost=new HttpPost("http://192.168.1.41:8888/hmis2015/selectAll.php");
+        try{
+            //EJECUTAMOS Y OBTENEMOS RESPUESTA DEL SERVIDOR
+            ResponseHandler<String> responseHandler=new BasicResponseHandler();
+            resquest=httpClient.execute(httpPost,responseHandler);
+        }catch (UnsupportedEncodingException e){
+        e.printStackTrace();
+        } catch (ClientProtocolException e) {
+        e.printStackTrace();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+        return resquest;
+    }
+
+    //METODO QUE DESCOMPONE, CREA UN OBJETO CON LOS DATOS DESCOMPUESTOS (COGIDOS DEL SERVIDOR) Y LO ALMACENA
+    //EN UN ARRAYLIST
+    private boolean filtrarDatos(){
+        listaUsuarios.clear();
+        if(!mostrar().equalsIgnoreCase("")){
+            String [] cargarDatos=mostrar().split("/");
+            for(int i=0;i<cargarDatos.length;i++){
+                String datosUsuario []=cargarDatos[i].split("<br>");
+                UsuariosApp usuariosApp=new UsuariosApp();
+                usuariosApp.setEmail(datosUsuario[0]);
+                usuariosApp.setNombre(datosUsuario[2]);
+                usuariosApp.setApellido(datosUsuario[3]);
+                usuariosApp.setFechaNac(datosUsuario[4]);
+                usuariosApp.setSexo(datosUsuario[5]);
+                usuariosApp.setSangre(datosUsuario[6]);
+                usuariosApp.setNumSegSocial(datosUsuario[7]);
+                //ID DEL USUARIO
+                usuariosApp.setId(datosUsuario[8]);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    //METODO QUE MUESTRA LOS DATOS ALMACENADOS EN EL ARRAYLIST
+    //MUESTRA EL USUARIO ALMACENADO COMO OBJETO EN EL ARRAYLIST
+    private void mostrarUsuario(final int posicion){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                UsuariosApp usuariosApp= (UsuariosApp) listaUsuarios.get(posicion);
+                tvEmail.setText(usuariosApp.getEmail());
+                tvNombre.setText(usuariosApp.getNombre());
+                tvApellido.setText(usuariosApp.getApellido());
+                tvFecha.setText(usuariosApp.getFechaNac());
+                tvSexo.setText(usuariosApp.getSexo());
+                tvSangre.setText(usuariosApp.getSangre());
+                tvNum.setText(usuariosApp.getNumSegSocial());
+
+            }
+        });
+    }
+
+    //CLASE PRIVADA PARA MOSTRAR PERSONAS
+    class Mostrar extends AsyncTask<String,String,String>{
+        @Override
+        protected String doInBackground(String... params) {
+            if(filtrarDatos())
+                mostrarUsuario(posicion);
+            return null;
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
@@ -195,8 +303,17 @@ public class DatosGuardadosActivity extends AppCompatActivity {
 
     public void editarDatos(){
         Intent intentEditar=new Intent(DatosGuardadosActivity.this,DatosActivity.class);
+       /* intentEditar.putExtra("email",tvEmail.getText());
+        intentEditar.putExtra("nombre",tvUsuario.getText());
+        intentEditar.putExtra("apellido",tvApellido.getText());
+        intentEditar.putExtra("fechaNac",tvFecha.getText());
+        intentEditar.putExtra("sexo",tvSexo.getText());
+        intentEditar.putExtra("sangre",tvSangre.getText());
+        intentEditar.putExtra("numSegSocial",tvNum.getText());*/
         startActivity(intentEditar);
     }
+
+
 
 
 }

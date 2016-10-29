@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <!-- Toolbar -->
     <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/menu_datos"
@@ -35,7 +38,7 @@
         android:layout_height="30dp"
         android:id="@+id/face"
         android:src="@drawable/ic_face_black_24dp"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/email"
         android:layout_toLeftOf="@+id/edtNombreAgenda"
         android:layout_toStartOf="@+id/edtNombreAgenda" />
     <ImageView
@@ -139,6 +142,7 @@
         app:backgroundTint="#FF4CAF50"
         app:rippleColor="#FFF"
        />
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
 
 

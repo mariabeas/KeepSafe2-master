@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -21,14 +21,30 @@
         android:foregroundGravity="right"
         android:id="@+id/logo"
         android:src="@drawable/logo"
-        android:layout_gravity="right" />
+        android:layout_gravity="right"
+        android:layout_below="@+id/menu_datos"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/edtIdUser"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/edtIdUser"
+        android:visibility="invisible"
+        android:layout_alignTop="@+id/logo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btnEnviarSMS"
         android:id="@+id/btnEnviarSMS"
-        android:layout_marginTop="40dp" />
+        android:layout_below="@+id/tvDireccion"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
 
     <EditText
         android:layout_width="match_parent"
@@ -38,9 +54,10 @@
         android:ems="10"
         android:id="@+id/edtContacto"
         android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginTop="20dp" />
+        android:layout_alignBaseline="@+id/btnEnviarSMS"
+        android:layout_alignBottom="@+id/btnEnviarSMS"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="match_parent"
@@ -48,10 +65,10 @@
         android:id="@+id/edtSMS"
         android:hint="@string/edtSMS"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_weight="0.21" />
+        android:layout_weight="0.21"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/btnEnviarSMS"
+        android:layout_alignEnd="@+id/btnEnviarSMS" />
 
     <!-- <android.support.design.widget.FloatingActionButton
          android:id="@+id/btnMensaje"
@@ -74,9 +91,8 @@
         android:id="@+id/tvUbi"
         android:layout_gravity="center_horizontal"
         android:layout_below="@+id/edtSMS"
-        android:layout_toLeftOf="@+id/logo"
-        android:layout_toStartOf="@+id/logo"
-        android:layout_marginTop="49dp" />
+        android:layout_alignRight="@+id/edtSMS"
+        android:layout_alignEnd="@+id/edtSMS" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -85,7 +101,9 @@
         android:text="@string/tvDireccion"
         android:id="@+id/tvDireccion"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp" />
+        android:layout_below="@+id/tvUbi"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp" />
 
 
-</LinearLayout>
+</RelativeLayout>

@@ -15,7 +15,7 @@ public class Usuario {
         private String numSeguridadSocial;
         //private String foto;
 
-        public Usuario(String id, String mail, String nombre, String apellido, String fechaNac, String sexo, String sangre, String numSeguridad) {
+        public Usuario(String id,String mail, String nombre, String apellido, String fechaNac, String sexo, String sangre, String numSeguridad) {
             this.idUsuario=id;
             this.emailUsuario=mail;
             this.nombreUsuario=nombre;

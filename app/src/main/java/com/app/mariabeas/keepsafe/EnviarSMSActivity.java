@@ -68,6 +68,7 @@ public class EnviarSMSActivity extends UbiActivity {
         //Insertamos los datos del SMS
         Button btnEnviarSMS = (Button) findViewById(R.id.btnEnviarSMS);
 
+
         MiListener listener=new MiListener();
         btnEnviarSMS.setOnClickListener(listener);
         MostrarLocalizacion();
@@ -158,11 +159,11 @@ public class EnviarSMSActivity extends UbiActivity {
         public void onClick(View v) {
             //PROBAR CON EL WEB SERVICE
             if (v.getId() == R.id.btnEnviarSMS) {
-               if (!edtContacto.getText().toString().trim().equalsIgnoreCase("") || !edtSMS.getText().toString().trim().equalsIgnoreCase("")
-                       || !tvUbi.getText().toString().trim().equalsIgnoreCase("") || !tvDireccion.getText().toString().trim().equalsIgnoreCase("")) {
+                if (!edtContacto.getText().toString().trim().equalsIgnoreCase("") || !edtSMS.getText().toString().trim().equalsIgnoreCase("")
+                        || !tvUbi.getText().toString().trim().equalsIgnoreCase("") || !tvDireccion.getText().toString().trim().equalsIgnoreCase("")) {
                     new Insertar(EnviarSMSActivity.this).execute();
                 } else
-                   Toast.makeText(EnviarSMSActivity.this, "Campos sin rellenar, reviselos", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EnviarSMSActivity.this, "Campos sin rellenar, reviselos", Toast.LENGTH_LONG).show();
 
                 new Insertar(EnviarSMSActivity.this).execute();
             }
@@ -170,9 +171,7 @@ public class EnviarSMSActivity extends UbiActivity {
             //ENVIAR SMS A TELEFONOS DIRECTAMENTE
             /*if(v.getId()==R.id.btnEnviarSMS){
                 PendingIntent sentIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, new Intent("SMS_SENT"), 0);
-
                 registerReceiver(new BroadcastReceiver() {
-
                     @Override
                     public void onReceive(Context context, Intent intent) {
                         switch (getResultCode()) {
@@ -193,9 +192,7 @@ public class EnviarSMSActivity extends UbiActivity {
                                 break;
                         }
                     }
-
             }, new IntentFilter("SMS_SENT"));
-
             SmsManager sms = SmsManager.getDefault();
             if( edtContacto.getText().toString().length()> 0 &&
                     edtSMS.getText().toString().length()>0 && tvDireccion.getText().toString().length()>0
@@ -203,7 +200,6 @@ public class EnviarSMSActivity extends UbiActivity {
             {
                 String mensajeTotal=String.format("%s,%s,%s",edtSMS.getText().toString()+"\n","La dirección es: "+tvDireccion.getText().toString()+"\n",tvUbi.getText().toString());
                 Toast.makeText(context, mensajeTotal, Toast.LENGTH_LONG).show();
-
                 ArrayList<String> texts = sms.divideMessage(mensajeTotal);
                 sms.sendMultipartTextMessage(edtContacto.getText().toString(), null, texts, null, null);
                // sms.sendTextMessage(edtContacto.getText().toString(), null, edtSMS.getText().toString().concat(mensajeTotal), sentIntent, null);
@@ -221,14 +217,14 @@ public class EnviarSMSActivity extends UbiActivity {
     private boolean insertar(){
         HttpClient httpClient=new DefaultHttpClient();
         List<NameValuePair> nameValuePairs;
-        HttpPost httpPost=new HttpPost("http://192.168.1.34:8888/hmis2015/insert.php");
+        HttpPost httpPost=new HttpPost("http://172.20.56.250:8888/hmis2015/insert.php");
         nameValuePairs=new ArrayList<>(4);
         //añadimos nuestros datos
         nameValuePairs.add(new BasicNameValuePair("telefono",edtContacto.getText().toString().trim()));
         nameValuePairs.add(new BasicNameValuePair("mensaje",edtSMS.getText().toString().trim()));
         nameValuePairs.add(new BasicNameValuePair("ubicacion",tvUbi.getText().toString().trim()));
         nameValuePairs.add(new BasicNameValuePair("direccion",tvDireccion.getText().toString().trim()));
-         try{
+        try{
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             httpClient.execute(httpPost);
             return true;
@@ -257,13 +253,13 @@ public class EnviarSMSActivity extends UbiActivity {
                     public void run() {
                         Toast.makeText(context,"Mensaje enviado con éxito",Toast.LENGTH_LONG).show();
                         //PARA LIMPIAR EL TEXTO DE LA PANTALLA NO ES NECESARIO
-                      // edtContacto.setText("");
-                       //edtSMS.setText("");
+                        // edtContacto.setText("");
+                        //edtSMS.setText("");
                         //tvUbi.setText("");
                         //tvDireccion.setText("");
                     }
                 });
-             else
+            else
                 context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

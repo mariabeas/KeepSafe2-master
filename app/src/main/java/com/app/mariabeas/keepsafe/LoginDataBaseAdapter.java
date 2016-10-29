@@ -4,10 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 import android.widget.TextView;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +18,7 @@ public class LoginDataBaseAdapter {
 
     static final String DATABASE_NAME="dbkeepsafe.db";
     static final int DATABASE_VERSION=1;
+
 
     //Clase privada para establecer los atributos de la tabla de la BD implicada EN ESTE CASO LA TABLA USUARIO
     private class usuariosDBInfo{
@@ -133,8 +132,38 @@ public class LoginDataBaseAdapter {
         return password;
     }
 
+
+    ////comprueba si el email y la contraseña de un paciente coinciden, es decir, si está en nuestra BD
+    public String comprobarPassword(String email){
+        db=this.getDatabaseInstance();
+        String emailUsuario,password="no existe";
+        try{
+            db.beginTransaction();
+            String query="SELECT "+usuariosDBInfo.EMAIL_COLUMN+usuariosDBInfo.PASSWORD_COLUMN+" FROM "+usuariosDBInfo.TABLE_NAME;
+            Cursor cursor=db.rawQuery(query,null);
+            if(cursor.moveToFirst()){
+                do{
+                    emailUsuario=cursor.getString(0);
+                    if(emailUsuario.equals(email)){
+                        password=cursor.getString(1);
+                        break;
+                    }
+                }while (cursor.moveToNext());
+            }
+            db.setTransactionSuccessful();
+        }catch (Exception e){
+
+        }finally {
+            db.endTransaction();
+            db.close();
+        }
+        return password;
+    }
+
+
+
     //METODO PARA OBTENER LOS DATOS PERSONALES DEL USUARIO
-    public String getSingleEntryDatos(String id){
+    public String getSingleEntryDatos(TextView id){
 
         String[]columnas=new String[]{usuariosDBInfo.IDUSUARIO_COLUMN,usuariosDBInfo.EMAIL_COLUMN,usuariosDBInfo.NOMBRE_COLUMN,
                 usuariosDBInfo.APELLIDOS_COLUMN,usuariosDBInfo.FECHANAC_COLUMN,usuariosDBInfo.SEXO_COLUMN, usuariosDBInfo.GRUPOSANGUINEO_COLUMN,
@@ -167,11 +196,35 @@ public class LoginDataBaseAdapter {
         values.put(usuariosDBInfo.GRUPOSANGUINEO_COLUMN,sangre);
         values.put(usuariosDBInfo.NUMSEGURIDADSOCIAL_COLUMN,numSeguridad);
 
-
         //INSERTAR LA FILA EN LA TABLE
         db.insert(usuariosDBInfo.TABLE_NAME, null, values);
         db.close();
     }
+    public void insertarUsuario(Usuario u){
+        db=this.getDatabaseInstance();
+        try{
+            db.beginTransaction();
+        ContentValues values=new ContentValues();
+            // ASIGNAR VALORES PARA CADA FILA
+            values.put(usuariosDBInfo.EMAIL_COLUMN, u.getEmailUsuario());
+            values.put(usuariosDBInfo.PASSWORD_COLUMN, u.getPasswordUsuario());
+            values.put(usuariosDBInfo.NOMBRE_COLUMN,u.getNombreUsuario());
+            values.put(usuariosDBInfo.APELLIDOS_COLUMN,u.getApellidosUsuario());
+            values.put(usuariosDBInfo.FECHANAC_COLUMN,u.getFechaNac());
+            values.put(usuariosDBInfo.SEXO_COLUMN,u.getSexo());
+            values.put(usuariosDBInfo.GRUPOSANGUINEO_COLUMN,u.getGrupoSanguineo());
+            values.put(usuariosDBInfo.NUMSEGURIDADSOCIAL_COLUMN,u.getNumSeguridadSocial());
+            db.insert(usuariosDBInfo.TABLE_NAME, null, values);
+            db.setTransactionSuccessful();
+
+        }catch (Exception e){
+
+        }finally {
+            db.endTransaction();
+            db.close();
+        }
+    }
+
     //PRUEBA
     public static void insertDatos(String mail,String nombre, String apellido, String fechaNac,
                                    String sexo, String sangre, String numSeguridad) {
@@ -250,11 +303,12 @@ public class LoginDataBaseAdapter {
         if(cursor != null) {
             cursor.moveToFirst();
         }
-        Usuario usuario = new Usuario(cursor.getString(0), cursor.getString(1),
-                cursor.getString(2), cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(7));
+       // Usuario usuario = new Usuario(cursor.getString(0), cursor.getString(1),
+         //       cursor.getString(2), cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(7));
 
         cursor.close();
-        return usuario;
+       // return usuario;
+        return null;
     }
 
     public List<Usuario> recuperarUsuario() {
@@ -266,13 +320,46 @@ public class LoginDataBaseAdapter {
         Cursor cursor = db.query(usuariosDBInfo.TABLE_NAME,valores_recuperar,usuariosDBInfo.IDUSUARIO_COLUMN,null,null,null,null);
         cursor.moveToFirst();
         do {
-            Usuario usuario = new Usuario(cursor.getString(0), cursor.getString(1),
-                    cursor.getString(2), cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(7));
+            //Usuario usuario = new Usuario(cursor.getString(0), cursor.getString(1),
+              //      cursor.getString(2), cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(7));
 
-            lista_usuarios.add(usuario);
+            //lista_usuarios.add(usuario);
         } while (cursor.moveToNext());
         //db.close();
         cursor.close();
         return lista_usuarios;
     }
+
+    //SEGUN EL EMAIL DEVUELVE EL NOMBRE DEL USUARIO
+    public String obtenerNombreUsuario(String email){
+        db=this.getDatabaseInstance();
+        String nombre="no existe",emailB;
+        try{
+            db.beginTransaction();
+            String query="SELECT "+usuariosDBInfo.NOMBRE_COLUMN+" FROM "+usuariosDBInfo.TABLE_NAME;
+            Cursor cursor=db.rawQuery(query,null);
+            if(cursor.moveToFirst()){
+                do{
+                    emailB=cursor.getString(0);
+                    if(emailB.equals(email)){
+                        nombre=cursor.getString(1);
+                        break;
+                    }
+                }while (cursor.moveToNext());
+            }
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+
+        } finally {
+            db.endTransaction();
+            db.close();
+        }
+        return nombre;
+    }
+
+
+
+
+
+
 }
