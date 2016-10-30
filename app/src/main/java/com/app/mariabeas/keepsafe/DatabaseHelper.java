@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class DatabaseHelper extends SQLiteOpenHelper {
     //DECLARAR LAS VARIABLES
 
-    static final String DATABASE_NAME="dbkeepsafe2.db";
+    static final String DATABASE_NAME="dbkeepsafe.db";
     static final int DATABASE_VERSION=1;
     SQLiteDatabase db;
 
@@ -87,7 +87,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //COMPROBAR SI EL EMAIL Y LA CONTRASEÑA DEL USUARIO COINCIDEN, ES DECIR, SI ESTA EN NUESTRA DB
-    public String comprobarEP(String email){
+    public String comprobarContrasena(String email){
         db=this.getReadableDatabase();
         String emailB,passwordB="no existe";
         try {
@@ -349,5 +349,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(query);
         this.onCreate(db);
 
+    }
+    // Método para obtener la dupla email/contraseña para validar al usuario que ha iniciado sesión
+    public String getSingleEntry(String user) {
+        Cursor cursor=db.query(usuariosDBInfo.TABLE_NAME, null, usuariosDBInfo.EMAIL_COLUMN + "=?", new String[]{user}, null, null, null);
+        if(cursor.getCount()<1){ //EL USUARIO NO EXISTE
+            cursor.close();
+            return "El email introducido no existe en la base de datos";
+        }
+        cursor.moveToFirst();
+        String password=cursor.getString(cursor.getColumnIndex(usuariosDBInfo.PASSWORD_COLUMN));
+        cursor.close();
+        return password;
     }
 }

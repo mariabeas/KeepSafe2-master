@@ -24,7 +24,7 @@
         app:pressedTranslationZ="12dp"
         app:backgroundTint="@color/colorAccent"
         android:layout_below="@+id/edtRecuperar"
-        android:layout_toRightOf="@+id/edtRecuperar"
-        android:layout_toEndOf="@+id/edtRecuperar" />
+        android:layout_alignRight="@+id/edtRecuperar"
+        android:layout_alignEnd="@+id/edtRecuperar" />
 
 </RelativeLayout>

@@ -62,6 +62,7 @@ public class RegistroActivity extends AppCompatActivity {
 
 
     LoginDataBaseAdapter loginDBAdapter=new LoginDataBaseAdapter(context);
+    DatabaseHelper helper=new DatabaseHelper(this);
 
 
     public RegistroActivity() {
@@ -208,7 +209,7 @@ public class RegistroActivity extends AppCompatActivity {
                 selectImage();
             }
             if(v.getId()==R.id.btnAceptar) {
-               if(usuario.isEmpty()||pass.isEmpty()||confiPass.isEmpty()){
+               if(usuario.isEmpty()||pass.isEmpty()||confiPass.isEmpty()|| nombre.isEmpty()||apellido.isEmpty()||fecha.isEmpty()||sexo.isEmpty()||sangre.isEmpty()||num.isEmpty()){
                     Toast.makeText(getApplicationContext(), "Compruebe que los campos no esten vacíos", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -220,11 +221,27 @@ public class RegistroActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"El número de seguridad social debe tener 12 dígitos",Toast.LENGTH_SHORT).show();
                     return;
                 }
+
                 else {
 
                     //INSERTAR USUARIO EN EL SERVIDOR A LA VEZ
                     new InsertarUsuario(RegistroActivity.this).execute();
-                    loginDBAdapter.insertEntry(usuario,pass,nombre,apellido,fecha,sexo,sangre,num);
+
+                    ////////PRUEBA
+                    Usuario u=new Usuario();
+                    u.setEmailUsuario(usuario);
+                    u.setNombreUsuario(nombre);
+                    u.setApellidosUsuario(apellido);
+                    u.setFechaNac(fecha);
+                    u.setSexo(sexo);
+                    u.setGrupoSanguineo(sangre);
+                    u.setNumSeguridadSocial(num);
+                    int idU=helper.obtenerID(usuario);
+                    u.setIdUsuario(String.valueOf(idU));
+                    helper.insertarUsuario(u);
+                    ///////////
+
+                   loginDBAdapter.insertEntry(usuario,pass,nombre,apellido,fecha,sexo,sangre,num);
                     Toast.makeText(getApplicationContext(), "Registro completado", Toast.LENGTH_SHORT).show();
                     //PARA PASAR DE UNA PANTALLA A OTRA
                     //Intent intentactivity = new Intent(RegistroActivity.this, MainActivity.class);

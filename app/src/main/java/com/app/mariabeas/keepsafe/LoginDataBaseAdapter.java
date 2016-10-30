@@ -20,6 +20,7 @@ public class LoginDataBaseAdapter {
     static final int DATABASE_VERSION=1;
 
 
+
     //Clase privada para establecer los atributos de la tabla de la BD implicada EN ESTE CASO LA TABLA USUARIO
     private class usuariosDBInfo{
         private static final String TABLE_NAME="Usuario";
@@ -114,6 +115,8 @@ public class LoginDataBaseAdapter {
     public void close() {
         db.close();
     }
+
+
     public SQLiteDatabase getDatabaseInstance(){
         return db;
     }
@@ -200,7 +203,8 @@ public class LoginDataBaseAdapter {
         db.insert(usuariosDBInfo.TABLE_NAME, null, values);
         db.close();
     }
-    public void insertarUsuario(Usuario u){
+
+    /*public void insertarUsuario(Usuario u){
         db=this.getDatabaseInstance();
         try{
             db.beginTransaction();
@@ -223,7 +227,7 @@ public class LoginDataBaseAdapter {
             db.endTransaction();
             db.close();
         }
-    }
+    }*/
 
     //PRUEBA
     public static void insertDatos(String mail,String nombre, String apellido, String fechaNac,
@@ -356,7 +360,6 @@ public class LoginDataBaseAdapter {
         }
         return nombre;
     }
-
 
 
 

@@ -72,6 +72,7 @@ public class DatosGuardadosActivity extends AppCompatActivity {
         tvEmail=(TextView)findViewById(R.id.edtUser);
         tvEmail.setText(getIntent().getStringExtra("emailUsuario"));
 
+
         tvApellido=(TextView)findViewById(R.id.edtApellido);
         tvApellido.setText(getIntent().getStringExtra("apellidoUsuario"));
         tvFecha=(TextView)findViewById(R.id.edtFecha);

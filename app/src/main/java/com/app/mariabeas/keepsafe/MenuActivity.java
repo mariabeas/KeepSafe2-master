@@ -36,14 +36,6 @@ public class MenuActivity extends AppCompatActivity {
 
         ////////
         email=getIntent().getStringExtra("emailUsuario");
-
-        nombre=getIntent().getStringExtra("nombreUsuario");
-        apellido=getIntent().getStringExtra("apellidoUsuario");
-        fecha=getIntent().getStringExtra("fechaUsuario");
-        sexo=getIntent().getStringExtra("sexoUsuario");
-        sangre=getIntent().getStringExtra("sangreUsuario");
-        num=getIntent().getStringExtra("numUsuario");
-        /////////
         nombre=helper.obtenerNombre(email);
         apellido=helper.obtenerApellido(email);
         fecha=helper.obtenerFecha(email);
@@ -51,6 +43,14 @@ public class MenuActivity extends AppCompatActivity {
         sangre=helper.obtenerSangre(email);
         num=helper.obtenerNum(email);
         /////////////////
+        /*nombre=getIntent().getStringExtra("nombreUsuario");
+        apellido=getIntent().getStringExtra("apellidoUsuario");
+        fecha=getIntent().getStringExtra("fechaUsuario");
+        sexo=getIntent().getStringExtra("sexoUsuario");
+        sangre=getIntent().getStringExtra("sangreUsuario");
+        num=getIntent().getStringExtra("numUsuario");*/
+
+
 
         //Declaramos el toolbar del menu datos
         Toolbar toolbar = (Toolbar) findViewById(R.id.menu_datos);
