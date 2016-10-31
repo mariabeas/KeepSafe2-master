@@ -48,11 +48,13 @@ public class EnviarSMSActivity extends UbiActivity {
     //EditText edtUbicacion;
     TextView tvUbi;
     TextView tvDireccion;
+    private String email;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.enviar_sms);
+        email=getIntent().getStringExtra("emailUsuario");
         //Declaramos el toolbar del menu datos
         Toolbar toolbar = (Toolbar) findViewById(R.id.menu_datos);
         setSupportActionBar(toolbar);
@@ -73,7 +75,7 @@ public class EnviarSMSActivity extends UbiActivity {
         btnEnviarSMS.setOnClickListener(listener);
         MostrarLocalizacion();
 
-        String ubicacion = "Mi ubicación actual es: " + "\n Latitud: " + valueOf(location.getLatitude() + Math.random() * 10) + "\n Longitud: "
+        String ubicacion = "\n Latitud: " + valueOf(location.getLatitude() + Math.random() * 10) + "\n Longitud: "
                 + valueOf(location.getLongitude());
 
         //tvDireccion.setText(ubicacion);
@@ -97,14 +99,17 @@ public class EnviarSMSActivity extends UbiActivity {
                     direccion.getCountryName());
             tvDireccion.setText(direccionText);
         }
-        numerosTelefono();
+        telefono112();
+        telefonoBomberos();
 
     }
 
-    public void numerosTelefono(){
+    public void telefonoBomberos(){
         String telefonoBombero=getIntent().getStringExtra("telefonoBombero");
         edtContacto.setText(telefonoBombero);
-        String telefono112=getIntent().getStringExtra("telefono112");
+    }
+    public void telefono112(){
+        String telefono112=getIntent().getStringExtra("telefonoEmergencias");
         edtContacto.setText(telefono112);
     }
     @Override

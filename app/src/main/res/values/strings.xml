@@ -106,6 +106,10 @@
     <!-- Strings de la pantalla agenda botones-->
     <string name="btnBomberos">Bomberos</string>
     <string name="tvBomberos">Bomberos</string>
+    <string name="btnEmergencias">112</string>
+    <string name="btnPolicia">Policia</string>
+    <string name="btnAmbulancia">Ambulancia</string>
+
 
 
 

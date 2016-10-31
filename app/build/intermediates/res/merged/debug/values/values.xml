@@ -401,11 +401,13 @@
     <string name="btnActualizar">Actualizar dirección</string>
     <string name="btnAdd">Añadir</string>
     <string name="btnAgenda">Agenda emergencias</string>
+    <string name="btnAmbulancia">Ambulancia</string>
     <string name="btnBomberos">Bomberos</string>
     <string name="btnCambiar">Cambiar contraseña</string>
     <string name="btnCerrar">Cerrar sesión</string>
     <string name="btnDatos">Datos personales</string>
     <string name="btnEditarDatos">Editar datos</string>
+    <string name="btnEmergencias">112</string>
     <string name="btnEnviarEmail">Enviar</string>
     <string name="btnEnviarSMS">Enviar</string>
     <string name="btnFB">Compartir en Facebook</string>
@@ -413,6 +415,7 @@
     <string name="btnGuardar">Guardar datos</string>
     <string name="btnInfo">Información</string>
     <string name="btnInicio">Iniciar sesión</string>
+    <string name="btnPolicia">Policia</string>
     <string name="btnRecuperar">Recuperar contraseña</string>
     <string name="btnRegistro">Registrarse</string>
     <string name="btnSMS">Enviar mensaje</string>

@@ -12,7 +12,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 /**
@@ -22,7 +21,8 @@ public class AgendaBotonesActivity extends AppCompatActivity {
 
 
     ImageView logo;
-    Context context=this;
+    Context context = this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,16 +37,28 @@ public class AgendaBotonesActivity extends AppCompatActivity {
 
         //ELEMENTOS DE LA INTERFAZ
 
-        logo=(ImageView)findViewById(R.id.logo);
-        Button btnBomberos=(Button)findViewById(R.id.btnBomberos);
-        ImageButton btn112=(ImageButton)findViewById(R.id.btn112);
+        logo = (ImageView) findViewById(R.id.logo);
+        Button btnBomberos = (Button) findViewById(R.id.btnBomberos);
+        Button btnEmergencias = (Button) findViewById(R.id.btnEmergencias);
+        Button btnPolicia = (Button) findViewById(R.id.btnPolicia);
+        Button btnAmbulancia = (Button) findViewById(R.id.btnAmbulancia);
 
+        ListenerAmbulancia listenerAmbulancia = new ListenerAmbulancia();
+        btnAmbulancia.setOnClickListener(listenerAmbulancia);
 
-        MiListener listener=new MiListener();
+        MiListener listener = new MiListener();
         btnBomberos.setOnClickListener(listener);
-        btn112.setOnClickListener(listener);
+
+        Listener112 listener112 = new Listener112();
+        btnEmergencias.setOnClickListener(listener112);
+
+        ListenerPolicia listenerPolicia = new ListenerPolicia();
+        btnPolicia.setOnClickListener(listenerPolicia);
+
+
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -66,7 +78,8 @@ public class AgendaBotonesActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
-    public void cerrarSesion(){
+
+    public void cerrarSesion() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         // Titulo del AlertDialog
         alertDialogBuilder.setTitle("¿Seguro que desea cerrar sesión?");
@@ -75,7 +88,7 @@ public class AgendaBotonesActivity extends AppCompatActivity {
                 .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intentLogin =new Intent(AgendaBotonesActivity.this,MainActivity.class);
+                        Intent intentLogin = new Intent(AgendaBotonesActivity.this, MainActivity.class);
                         startActivity(intentLogin);
                         finish();
                     }
@@ -93,24 +106,59 @@ public class AgendaBotonesActivity extends AppCompatActivity {
         alertDialog.show();
 
     }
-    private class MiListener implements View.OnClickListener {
+
+    private class ListenerPolicia implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-            if (v.getId() == R.id.btn112) {
-                //PARA PASAR DE UNA PANTALLA A OTRA
-                String num112="112";
-                Intent intent112 = new Intent(AgendaBotonesActivity.this, EnviarSMSActivity.class);
-                intent112.putExtra("telefono112",num112);
-                startActivity(intent112);
+            if (v.getId() == R.id.btnPolicia) {
+                String numPolicia = "091";
+                Intent intentPolicia = new Intent(AgendaBotonesActivity.this, EnviarSMSActivity.class);
+                intentPolicia.putExtra("telefonoPolicia", numPolicia + "");
+                startActivity(intentPolicia);
 
-
-            } else if (v.getId() == R.id.btnBomberos) {
-                Intent intentBomberos = new Intent(AgendaBotonesActivity.this, EnviarSMSActivity.class);
-                String numBomberos="080";
-                intentBomberos.putExtra("telefonoBombero", numBomberos+"");
-                startActivity(intentBomberos);
             }
         }
     }
-}
+
+    private class Listener112 implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            if (v.getId() == R.id.btnEmergencias) {
+                String numEmergencias = "112";
+                Intent intentEmergencias = new Intent(AgendaBotonesActivity.this, EnviarSMSActivity.class);
+                intentEmergencias.putExtra("telefonoEmergencias", numEmergencias + "");
+                startActivity(intentEmergencias);
+            }
+        }
+    }
+
+        private class ListenerAmbulancia implements View.OnClickListener {
+
+            @Override
+            public void onClick(View v) {
+                if (v.getId() == R.id.btnAmbulancia) {
+                    String numAmbulancia = "061";
+                    Intent intentAmbulancia = new Intent(AgendaBotonesActivity.this, EnviarSMSActivity.class);
+                    intentAmbulancia.putExtra("telefonoAmbulancia", numAmbulancia + "");
+                    startActivity(intentAmbulancia);
+                }
+            }
+        }
+
+            private class MiListener implements View.OnClickListener {
+
+                @Override
+                public void onClick(View v) {
+                    if (v.getId() == R.id.btnBomberos) {
+                        Intent intentBomberos = new Intent(AgendaBotonesActivity.this, EnviarSMSActivity.class);
+                        String numBomberos = "080";
+                        intentBomberos.putExtra("telefonoBombero", numBomberos + "");
+                        startActivity(intentBomberos);
+                    }
+                }
+            }
+        }
+
+

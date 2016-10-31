@@ -10,7 +10,6 @@
         android:background="?attr/colorPrimary"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -22,25 +21,61 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-    <ImageButton
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:stretchColumns="0,1">
+        <TableRow>
+
+
+            <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btn112"
-        android:background="@drawable/icono112"
-        android:layout_below="@+id/logo"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="56dp"
-        android:layout_marginStart="56dp" />
+        android:text="@string/btnPolicia"
+        android:id="@+id/btnPolicia"
+        android:layout_alignTop="@+id/btnBomberos"
+        android:layout_toLeftOf="@+id/logo"
+        android:layout_toStartOf="@+id/logo"
+                android:layout_marginTop="200dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btnBomberos"
-        android:id="@+id/btnBomberos"
-        android:layout_below="@+id/btn112"
-        android:layout_alignLeft="@+id/btn112"
-        android:layout_alignStart="@+id/btn112"
-        android:layout_marginTop="30dp" />
+        android:text="@string/btnAmbulancia"
+        android:id="@+id/btnAmbulancia"
+        android:layout_alignTop="@+id/btnEmergencias"
+        android:layout_alignLeft="@+id/btnBomberos"
+        android:layout_alignStart="@+id/btnBomberos"
+        android:layout_marginTop="200dp" />
+        </TableRow>
 
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btnEmergencias"
+        android:id="@+id/btnEmergencias"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/btnPolicia"
+        android:layout_alignStart="@+id/btnPolicia"
+        android:layout_marginTop="20dp"
+                android:layout_column="0" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btnBomberos"
+                android:id="@+id/btnBomberos"
+                android:layout_marginLeft="0dp"
+                android:layout_above="@+id/btnEmergencias"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="0dp"
+                android:layout_column="1"
+                android:layout_marginTop="20dp" />
+        </TableRow>
+    </TableLayout>
 </RelativeLayout>
